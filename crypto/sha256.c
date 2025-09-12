@@ -9,20 +9,20 @@
  * Return: pointer to digest, or NULL on failure
  */
 uint8_t *sha256(int8_t const *s, size_t len, uint8_t
- digest[SHA256_DIGEST_LENGTH])
+	digest[SHA256_DIGEST_LENGTH])
 {
-	SHA256_CTX *c = NULL;
+	SHA256_CTX c;
 
 	if (!s || len == 0 || !digest)
 		return (NULL);
 
-	if (!SHA256_Init(c))
+	if (!SHA256_Init(&c))
 		return (NULL);
 
-	if (!SHA256_Update(c, s, len))
+	if (!SHA256_Update(&c, s, len))
 		return (NULL);
 
-	if (!SHA256_Final(digest, c))
+	if (!SHA256_Final(digest, &c))
 		return (NULL);
 
 	return (digest);
