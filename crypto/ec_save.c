@@ -28,27 +28,35 @@ int ec_save(EC_KEY *key, char const *folder)
 	int folder_len = strlen(folder);
 	char *fp_prv;
 	char *fp_pub;
+	mode_t mode = 0700;
 
 	if (!key || !folder)
 		return (0);
 
-	fp_prv = calloc(folder_len + strlen("key.pem") + 2, 1);
-	fp_pub = calloc(folder_len + strlen("key_pub.pem") + 2, 1);
+	fp_prv = malloc(folder_len + strlen("key.pem") + 2);
+	fp_pub = malloc(folder_len + strlen("key_pub.pem") + 2);
 
 	sprintf(fp_prv, "%s/%s", folder, "key.pem");
 	sprintf(fp_pub, "%s/%s", folder, "key_pub.pem");
 
 	if (!is_dir(folder))
-		return (0);
+		if (mkdir(folder, mode) != 0)
+			perror("Error creating directory");
 
 	file = fopen(fp_prv, "w");
 	if (!PEM_write_ECPrivateKey(file, key, NULL, NULL, 0, NULL, NULL))
+	{
+		fprintf(stderr, "Failure at PEM_write_ECPrivateKey()\n");
 		return (0);
+	}
 	fclose(file);
 
 	file = fopen(fp_pub, "w");
 	if (!PEM_write_EC_PUBKEY(file, key))
+	{
+		fprintf(stderr, "Failure at PEM_write_EC_PUBKEY()\n");
 		return (0);
+	}
 	fclose(file);
 
 	return (1);
