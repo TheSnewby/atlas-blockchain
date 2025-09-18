@@ -39,7 +39,7 @@
         fprintf(stderr, "Key2 verification failed\n");
         return (EXIT_FAILURE);
     }
- (/)
+
     printf("Successfully created EC key from public key\n");
     /* Extract public key from new key */
     if (!ec_to_pub(key2, pub2))
