@@ -9,7 +9,9 @@
 #include <openssl/sha.h>
 #include <openssl/ec.h>
 #include <openssl/obj_mac.h>
-
+#include <openssl/pem.h>
+#include <sys/stat.h>
+#include <errno.h>
 
 # define EC_CURVE   NID_secp256k1
 
