@@ -6,7 +6,7 @@
  *
  * Return: 1 if path exists and is writeable, 0 otherwise
  */
-int is_dir(char const *folder)
+static int is_dir(char const *folder)
 {
 	struct stat st;
 
