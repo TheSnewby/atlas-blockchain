@@ -2,7 +2,7 @@
 
 /**
  * ec_from_pub - creates an EC_KEY structure given a public key
- * @pub: contians the public key to be converted
+ * @pub: contains the public key to be converted
  *
  * Returns: pointer to the created EC_KEY structure, or NULL on failure
  */
