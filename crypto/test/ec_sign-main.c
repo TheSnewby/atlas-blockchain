@@ -37,7 +37,7 @@
         return (EXIT_FAILURE);
     }
     printf("Successfully created EC key pair\n");
- (/)
+
     /* Test `ec_sign()` */
     if (test_ec_sign(key) != EXIT_SUCCESS)
     {
