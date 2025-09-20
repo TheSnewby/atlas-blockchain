@@ -11,6 +11,7 @@
 #include <openssl/obj_mac.h>
 #include <openssl/pem.h>
 #include <openssl/evp.h>
+#include <openssl/ecdsa.h>
 #include <sys/stat.h>
 #include <errno.h>
 
