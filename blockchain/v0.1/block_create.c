@@ -24,13 +24,14 @@ block_t *block_create(block_t const *prev, int8_t const *data, uint32_t data_len
 	if (!new_block)
 		return (NULL);
 
-	memcpy(new_block->info.prev_hash, prev, 32);
+	memcpy(new_block->info.prev_hash, prev->hash, 32);
 	new_block->info.index = prev->info.index + 1;
 	new_block->info.difficulty = 0;
 	new_block->info.nonce = 0;
 	new_block->info.timestamp = time(NULL); /* might need (uint64_t) */
 	memcpy(new_block->data.buffer, data, true_data_len);
 	new_block->data.len = true_data_len;
+	memset(new_block->hash, 0, SHA256_DIGEST_LENGTH);
 
 	return (new_block);
 }
