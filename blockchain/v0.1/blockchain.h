@@ -80,5 +80,6 @@ typedef struct block_s
 	uint8_t     hash[SHA256_DIGEST_LENGTH];
 } block_t;
 
+blockchain_t *blockchain_create(void);
 
 #endif
