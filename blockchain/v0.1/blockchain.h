@@ -6,6 +6,7 @@
 #include <openssl/sha.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #define HOLBERTON_HASH \
 "\xc5\x2c\x26\xc8\xb5\x46\x16\x39" \
@@ -81,5 +82,6 @@ typedef struct block_s
 } block_t;
 
 blockchain_t *blockchain_create(void);
+block_t *block_create(block_t const *, int8_t const *, uint32_t);
 
 #endif
