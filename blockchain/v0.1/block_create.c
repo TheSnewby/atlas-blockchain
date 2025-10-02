@@ -5,11 +5,12 @@
  * @prev: pointer to the Previous Block in the Blockchain
  * @data: memory area to duplicate in the Block's data
  * @data_len: stores the number of bytes to duplicate in data.
- *  If data_len is larger than BLOCKCHAIN_DATA_MAX then the latter must be used.
+ *  If data_len is larger than BLOCKCHAIN_DATA_MAX then the latter must be used
  *
  * Return: new Block or NULL on failure
  */
-block_t *block_create(block_t const *prev, int8_t const *data, uint32_t data_len)
+block_t *block_create(block_t const *prev,
+	int8_t const *data, uint32_t data_len)
 {
 	block_t *new_block = NULL;
 	unsigned int true_data_len;
