@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "hblk_crypto.h"
 
 #define HOLBERTON_HASH \
 "\xc5\x2c\x26\xc8\xb5\x46\x16\x39" \
@@ -91,5 +92,13 @@ int blockchain_serialize(blockchain_t const *, char const *);
 blockchain_t *blockchain_deserialize(char const *);
 int block_is_valid(block_t const *, block_t const *);
 
+void _blockchain_destroy(blockchain_t *);
+static void _print_hex_buffer(uint8_t const *, size_t );
+static int _block_print(block_t const *block, unsigned int index,
+	char const *indent);
+static int _block_print_brief(block_t const *block, unsigned int index,
+	char const *indent);
+void _blockchain_print(blockchain_t const *blockchain);
+void _blockchain_print_brief(blockchain_t const *blockchain);
 
 #endif
