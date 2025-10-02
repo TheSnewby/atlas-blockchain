@@ -83,5 +83,13 @@ typedef struct block_s
 
 blockchain_t *blockchain_create(void);
 block_t *block_create(block_t const *, int8_t const *, uint32_t);
+void block_destroy(block_t *);
+void blockchain_destroy(blockchain_t *);
+uint8_t *block_hash(block_t const *,
+	uint8_t [SHA256_DIGEST_LENGTH]);
+int blockchain_serialize(blockchain_t const *, char const *);
+blockchain_t *blockchain_deserialize(char const *);
+int block_is_valid(block_t const *, block_t const *);
+
 
 #endif
