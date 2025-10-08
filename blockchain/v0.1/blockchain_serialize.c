@@ -18,16 +18,20 @@ int isBigEndian(void)
  * @fd: file descriptor to fwrite to
  * Return: 0 on success
  */
-int writeBlk(block_t *blk, FILE *fd)
+int writeBlk(void *blk, unsigned int a, void *fd)
 {
-	fwrite(&blk->info.index, sizeof(int), 1, fd);
-	fwrite(&blk->info.difficulty, sizeof(int), 1, fd);
-	fwrite(&blk->info.timestamp, sizeof(uint64_t), 1, fd);
-	fwrite(&blk->info.nonce, sizeof(uint64_t), 1, fd);
-	fwrite(&blk->info.prev_hash, SHA256_DIGEST_LENGTH, 1, fd);
-	fwrite(&blk->data.len, sizeof(uint32_t), 1, fd);
-	fwrite(&blk->data.buffer, blk->data.len, 1, fd);
-	fwrite(&blk->hash, SHA256_DIGEST_LENGTH, 1, fd);
+	block_t *block = (block_t *)blk;
+	FILE *f = (FILE *)fd;
+	(void)a;
+
+	fwrite(&block->info.index, sizeof(int), 1, f);
+	fwrite(&block->info.difficulty, sizeof(int), 1, f);
+	fwrite(&block->info.timestamp, sizeof(uint64_t), 1, f);
+	fwrite(&block->info.nonce, sizeof(uint64_t), 1, f);
+	fwrite(&block->info.prev_hash, SHA256_DIGEST_LENGTH, 1, f);
+	fwrite(&block->data.len, sizeof(uint32_t), 1, f);
+	fwrite(&block->data.buffer, block->data.len, 1, f);
+	fwrite(&block->hash, SHA256_DIGEST_LENGTH, 1, f);
 
 	return (0);
 }
