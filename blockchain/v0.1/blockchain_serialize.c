@@ -16,8 +16,9 @@ int isBigEndian(void)
  * writeBlk - writes a Block to memory
  * @blk: individual block to print
  * @fd: file descriptor to fwrite to
+ * Return: 0 on success
  */
-void writeBlk(block_t *blk, FILE *fd)
+int writeBlk(block_t *blk, FILE *fd)
 {
 	fwrite(&blk->info.index, sizeof(int), 1, fd);
 	fwrite(&blk->info.difficulty, sizeof(int), 1, fd);
@@ -27,6 +28,8 @@ void writeBlk(block_t *blk, FILE *fd)
 	fwrite(&blk->data.len, sizeof(uint32_t), 1, fd);
 	fwrite(&blk->data.buffer, blk->data.len, 1, fd);
 	fwrite(&blk->hash, SHA256_DIGEST_LENGTH, 1, fd);
+
+	return (0);
 }
 
 /**
