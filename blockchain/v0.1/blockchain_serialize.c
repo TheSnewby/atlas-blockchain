@@ -15,6 +15,7 @@ int isBigEndian(void)
 /**
  * writeBlk - writes a Block to memory
  * @blk: individual block to print
+ * @a: unused variable required by llist_for_each()
  * @fd: file descriptor to fwrite to
  * Return: 0 on success
  */
