@@ -8,12 +8,15 @@
 #include <string.h>
 #include <time.h>
 #include "hblk_crypto.h"
+#include <stdio.h>
 
 #define HOLBERTON_HASH \
 "\xc5\x2c\x26\xc8\xb5\x46\x16\x39" \
 "\x63\x5d\x8e\xdf\x2a\x97\xd4\x8d" \
 "\x0c\x8e\x00\x09\xc8\x17\xf2\xb1" \
 "\xd3\xd7\xff\x2f\x04\x51\x58\x03"
+
+#define FILEREAD 65536
 
 /**
  * struct block_info_s - Block info structure
@@ -93,12 +96,7 @@ blockchain_t *blockchain_deserialize(char const *);
 int block_is_valid(block_t const *, block_t const *);
 
 void _blockchain_destroy(blockchain_t *);
-static void _print_hex_buffer(uint8_t const *, size_t );
-static int _block_print(block_t const *block, unsigned int index,
-	char const *indent);
-static int _block_print_brief(block_t const *block, unsigned int index,
-	char const *indent);
-void _blockchain_print(blockchain_t const *blockchain);
-void _blockchain_print_brief(blockchain_t const *blockchain);
+void _blockchain_print(blockchain_t const *);
+void _blockchain_print_brief(blockchain_t const *);
 
 #endif
