@@ -48,7 +48,6 @@ blockchain_t *blockchain_deserialize(char const *path)
 	FILE *fd;
 	blockchain_t *blockchain = NULL;
 	llist_t *chain = NULL;
-	block_t *block = NULL;
 	char read[FILEREAD] = {0};
 
 	if (!path)
@@ -76,7 +75,7 @@ blockchain_t *blockchain_deserialize(char const *path)
 	memcpy(&numBlocks, read + 8, sizeof(int));
 
 	/* BLOCKS */
-	if (!deserialize_blocks(read, blockchain, numBlocks))
+	if (!deserialize_blocks(read, (unsigned int)numBlocks, blockchain))
 	{
 		free(blockchain);
 		llist_destroy(chain, 0, 0);
