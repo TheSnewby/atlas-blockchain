@@ -2,15 +2,17 @@
 
 /**
  * deserialize_blocks - deserializes the specific blocks
- * @read: file contents
- * @blockchain: blockchain
- * @numBlocks: number of Blocks
- * Return: 1 on success, 0 on failure
+ * @rd: file contents
+ * @numb: number of Blocks
+ * @bchn: blockchain
+ * Return: 1 on success
  */
-int deserialize_blocks(char *read, blockchain_t *blockchain, int numBlocks)
+int deserialize_blocks(void *rd, unsigned int numb, void *bchn)
 {
-	int offset = 12, i;
+	int offset = 12, i, numBlocks = (int)numb;
 	block_t *block = NULL;
+	blockchain_t *blockchain = (blockchain_t *)bchn;
+	char *read = (char *)rd;
 
 	/* BLOCKS */
 	for (i = 0; i < numBlocks; i++)
@@ -32,6 +34,7 @@ int deserialize_blocks(char *read, blockchain_t *blockchain, int numBlocks)
 		offset += 60 + block->data.len;
 		llist_add_node(blockchain->chain, block, ADD_NODE_REAR);
 	}
+	return (1);
 }
 
 /**
