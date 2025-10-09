@@ -8,7 +8,6 @@
  */
 int block_is_valid(block_t const *block, block_t const *prev_block)
 {
-	int i;
 	uint8_t prev_hash[SHA256_DIGEST_LENGTH] = {0};
 	uint8_t current_hash[SHA256_DIGEST_LENGTH] = {0};
 
@@ -20,14 +19,8 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 	{
 		if (prev_block || block->info.difficulty || block->info.nonce)
 			return (1);
-		for (i = 0; i < SHA256_DIGEST_LENGTH; i++)
-		{
-			if (block->hash[i] != 0)
-			{
-				fprintf(stderr, "block->hash[%d] = %d\n", i, block->hash[i]);
-				return (1);
-			}
-		}
+		if (memcmp(block->hash, HOLBERTON_HASH, SHA256_DIGEST_LENGTH) != 0)
+			return (1);
 	}
 	if (prev_block)
 		SHA256((unsigned char *)prev_block,
@@ -37,8 +30,8 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 	if (prev_block &&
 		memcmp(prev_hash, prev_block->hash, SHA256_DIGEST_LENGTH) != 0)
 		return (1);
-	if (memcmp(prev_block->hash, block->info.prev_hash,
-		SHA256_DIGEST_LENGTH) != 0)
+	if (prev_block && (memcmp(prev_block->hash, block->info.prev_hash,
+		SHA256_DIGEST_LENGTH) != 0))
 		return (1);
 	if (memcmp(current_hash, block->hash, SHA256_DIGEST_LENGTH) != 0)
 		return (1);
