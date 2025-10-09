@@ -20,10 +20,13 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 	{
 		if (prev_block || block->info.difficulty || block->info.nonce)
 			return (1);
-		for (i = 0; i < 32; i++)
+		for (i = 0; i < SHA256_DIGEST_LENGTH; i++)
 		{
 			if (block->hash[i] != 0)
+			{
+				fprintf(stderr, "block->hash[%d] = %d\n", i, block->hash[i]);
 				return (1);
+			}
 		}
 	}
 	if (prev_block)
