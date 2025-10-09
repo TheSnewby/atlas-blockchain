@@ -13,7 +13,6 @@ int deserialize_blocks(void *rd, unsigned int numb, void *bchn)
 	block_t *block = NULL;
 	blockchain_t *blockchain = (blockchain_t *)bchn;
 	char *read = (char *)rd;
-	uint8_t hash_buf[SHA256_DIGEST_LENGTH];
 
 	/* BLOCKS */
 	for (i = 0; i < numBlocks; i++)
@@ -31,7 +30,8 @@ int deserialize_blocks(void *rd, unsigned int numb, void *bchn)
 		memcpy(&block->info.prev_hash, read + offset + 24, SHA256_DIGEST_LENGTH);
 		memcpy(&block->data.len, read + offset + 56, sizeof(uint32_t));
 		memcpy(&block->data.buffer, read + offset + 60, block->data.len);
-		memcpy(&block->hash, read + offset + block->data.len + 60, SHA256_DIGEST_LENGTH);
+		memcpy(&block->hash, read + offset + block->data.len + 60,
+			SHA256_DIGEST_LENGTH);
 
 		offset += 60 + block->data.len + SHA256_DIGEST_LENGTH;
 		llist_add_node(blockchain->chain, block, ADD_NODE_REAR);
