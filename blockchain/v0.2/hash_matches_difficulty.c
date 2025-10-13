@@ -26,7 +26,7 @@ int hash_matches_difficulty(uint8_t const hash[SHA256_DIGEST_LENGTH],
 	for (iBit = 0; iBit < remainingBits; iBit++)
 	{
 		mask = 1 << iBit;
-		if (mask & hash[iByte] == 1)
+		if ((mask & hash[iByte]) == 1)
 			return (0);
 	}
 
