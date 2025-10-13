@@ -99,4 +99,8 @@ void _blockchain_destroy(blockchain_t *);
 void _blockchain_print(blockchain_t const *);
 void _blockchain_print_brief(blockchain_t const *);
 
+int hash_matches_difficulty(uint8_t const [SHA256_DIGEST_LENGTH], uint32_t);
+void block_mine(block_t *);
+uint32_t blockchain_difficulty(blockchain_t const *);
+
 #endif
