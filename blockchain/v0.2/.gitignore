@@ -1,0 +1,7 @@
+*.so
+test/
+block_destroy-test
+block_create-test
+block_is_valid-test
+blockchain_create-test
+blockchain_destroy-test
