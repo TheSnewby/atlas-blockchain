@@ -7,5 +7,16 @@
  */
 void block_mine(block_t *block)
 {
-	
+	for (block->info.nonce = 0;
+		block->info.nonce < UINT64_MAX; block->info.nonce++)
+	{
+		/* GENERATE A HASH */
+		SHA256((unsigned char *)block,
+		block->data.len + sizeof(block->info),
+		block->hash);
+
+		/* CHECK */
+		if (hash_matches_difficulty(block->hash, block->info.difficulty))
+			break;
+	}
 }
