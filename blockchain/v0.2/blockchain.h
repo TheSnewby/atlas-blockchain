@@ -9,6 +9,7 @@
 #include <time.h>
 #include "hblk_crypto.h"
 #include <stdio.h>
+#include <unistd.h>
 
 #define HOLBERTON_HASH \
 "\xc5\x2c\x26\xc8\xb5\x46\x16\x39" \
@@ -16,7 +17,12 @@
 "\x0c\x8e\x00\x09\xc8\x17\xf2\xb1" \
 "\xd3\xd7\xff\x2f\x04\x51\x58\x03"
 
+/* Defines a maximum size of a file, mostly arbitrary and simplified */
 #define FILEREAD 65536
+/* Defines how often (in seconds) a Block should be found */
+#define BLOCK_GENERATION_INTERVAL 1
+/* Defines how often (in Blocks) the difficulty should be adjusted */
+#define DIFFICULTY_ADJUSTMENT_INTERVAL 5
 
 /**
  * struct block_info_s - Block info structure
