@@ -16,5 +16,20 @@ unspent_tx_out_t *unspent_tx_out_create(
 	uint8_t tx_id[SHA256_DIGEST_LENGTH],
 	tx_out_t const *out)
 {
-	
+	unspent_tx_out_t *tx = NULL;
+
+	if (!block_hash || !out)
+		return (NULL);
+
+	tx = (unspent_tx_out_t *)malloc(sizeof(unspent_tx_out_t));
+	if (!tx)
+		return (NULL);
+
+	memcpy(tx->block_hash, block_hash, SHA256_DIGEST_LENGTH);
+	memcpy(tx->tx_id, tx_id, SHA256_DIGEST_LENGTH);
+	tx->out.amount = out->amount;
+	memcpy(tx->out.pub, out->pub, EC_PUB_LEN);
+	memcpy(tx->out.hash, out->hash, SHA256_DIGEST_LENGTH);
+
+	return (tx);
 }
