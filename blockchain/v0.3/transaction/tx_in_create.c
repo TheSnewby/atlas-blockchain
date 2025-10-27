@@ -22,7 +22,7 @@ tx_in_t *tx_in_create(unspent_tx_out_t const *unspent)
 	memcpy(tx->tx_id, unspent->tx_id, SHA256_DIGEST_LENGTH);
 	memcpy(tx->tx_out_hash, unspent->out.hash, SHA256_DIGEST_LENGTH);
 	memset(tx->sig.sig, 0, SIG_MAX_LEN);
-	tx->sig.len = SIG_MAX_LEN;
+	tx->sig.len = 0;
 
 	return (tx);
 }
