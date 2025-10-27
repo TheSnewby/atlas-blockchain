@@ -14,7 +14,7 @@ tx_in_t *tx_in_create(unspent_tx_out_t const *unspent)
 	if (!unspent)
 		return (NULL);
 
-	tx = (tx_in_t *)malloc(sizeof(tx_in_t *));
+	tx = (tx_in_t *)malloc(sizeof(tx_in_t));
 	if (!tx)
 		return (NULL);
 
