@@ -37,8 +37,6 @@ uint8_t *transaction_hash(
 			SHA256_DIGEST_LENGTH);
 	}
 
-	fprintf(stderr, "inputs_size: %d, i: %d\n", inputs_size, i);
-
 	for (j = 0; j < outputs_size; j++)
 	{
 		tx_out = (tx_out_t *)llist_get_node_at(transaction->outputs, j);
