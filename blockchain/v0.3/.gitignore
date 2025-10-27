@@ -1,5 +1,11 @@
-*
-!*.c
-!*.h
-!*.md
-!Makefile
+*.so
+test/
+block_destroy-test
+block_create-test
+block_is_valid-test
+blockchain_create-test
+blockchain_destroy-test
+hash_matches_difficulty-test
+block_mine-test
+blockchain_difficulty-test
+transaction/tx_out_create-test
