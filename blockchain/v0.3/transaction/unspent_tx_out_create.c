@@ -1,4 +1,5 @@
 #include "blockchain.h"
+#include "transaction.h"
 
 /**
  * unspent_tx_out_create - allocates and initializes an unspent transaction
