@@ -9,3 +9,4 @@ hash_matches_difficulty-test
 block_mine-test
 blockchain_difficulty-test
 transaction/tx_out_create-test
+transaction/transaction_hash.c
