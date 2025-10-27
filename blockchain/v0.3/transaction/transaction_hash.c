@@ -48,5 +48,6 @@ uint8_t *transaction_hash(
 
 	SHA256(hash_me, hash_me_size, hash_buf);
 
+	free(hash_me);
 	return (hash_buf);
 }
