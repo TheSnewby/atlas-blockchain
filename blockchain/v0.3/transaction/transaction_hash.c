@@ -3,7 +3,7 @@
 /**
  * transaction_hash - computes the ID (hash) of a transaction
  * @transaction: transaction to compute the hash of
- * @hash_buf: buffer in which to stre the computed hash
+ * @hash_buf: buffer in which to store the computed hash
  *
  * Return: pointer to hash_buf
  */

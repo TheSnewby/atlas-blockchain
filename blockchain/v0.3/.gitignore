@@ -11,3 +11,4 @@ blockchain_difficulty-test
 transaction/tx_out_create-test
 transaction/transaction_hash.c
 transaction/tx_in_sign-test
+transaction/transaction_create-test
