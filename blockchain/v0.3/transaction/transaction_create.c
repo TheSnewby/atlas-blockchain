@@ -9,8 +9,10 @@
  * @sender: contains the private key of the transaction sender
  * @receiver: contains the public key of the transaction receiver
  * @amount: amount to send
+ *
+ * Return: 1 on success, 0 on failure
  */
-void inputs_and_outputs_generation(
+int inputs_and_outputs_generation(
 	transaction_t *tx,
 	llist_t *inputs,
 	llist_t *outputs,
@@ -43,7 +45,10 @@ void inputs_and_outputs_generation(
 	}
 
 	if (amount > sender_bank)
+	{
 		fprintf(stderr, "Not enough money.\n");
+		return (0);
+	}
 
 	tx_out_pay = tx_out_create(amount, receiver_pub);
 	llist_add_node(outputs, tx_out_pay, ADD_NODE_REAR);
@@ -97,8 +102,9 @@ transaction_t *transaction_create(
 	tx->inputs = inputs;
 	tx->outputs = outputs;
 
-	inputs_and_outputs_generation(tx, inputs, outputs,
-		all_unspent, sender, receiver, amount);
+	if (!inputs_and_outputs_generation(tx, inputs, outputs,
+		all_unspent, sender, receiver, amount))
+		return (NULL);
 
 	return (tx);
 }
