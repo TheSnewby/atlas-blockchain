@@ -1,50 +1,30 @@
 #include "blockchain.h"
 
 /**
- * transaction_create - creates a transaction
+ * inputs_and_outputs_generation - generates the llist of inputs & outputs
+ * @tx: transaction
+ * @inputs: inputs llist for tx
+ * @outputs: outputs llist for tx
+ * @all_unspent: all unspent transactions
  * @sender: contains the private key of the transaction sender
  * @receiver: contains the public key of the transaction receiver
  * @amount: amount to send
- * @all_unspent: list of all the unspent outputs to date
- *
- * Return: created transaction, NULL on failure
  */
-transaction_t *transaction_create(
+void inputs_and_outputs_generation(
+	transaction_t *tx,
+	llist_t *inputs,
+	llist_t *outputs,
+	llist_t *all_unspent,
 	EC_KEY const *sender,
 	EC_KEY const *receiver,
-	uint32_t amount,
-	llist_t *all_unspent)
+	uint32_t amount)
 {
-	transaction_t *tx = NULL;
-	unspent_tx_out_t *unspent_tx = NULL;
-	llist_t *inputs = NULL;
-	llist_t *outputs = NULL;
 	uint32_t sender_bank = 0;
 	uint8_t sender_pub[EC_PUB_LEN], receiver_pub[EC_PUB_LEN];
 	tx_out_t *tx_out_pay = NULL, *tx_out_rtn = NULL;
 	tx_in_t *tx_in = NULL;
+	unspent_tx_out_t *unspent_tx = NULL;
 	int i, all_unspent_size;
-
-	if (!sender || !receiver || !amount || !all_unspent)
-	{
-		fprintf(stderr, "!param\n");
-		return (NULL);
-	}
-
-	tx = (transaction_t *)malloc(sizeof(transaction_t));
-	if (!tx)
-		return (NULL);
-
-	inputs = llist_create(MT_SUPPORT_TRUE);
-	outputs = llist_create(MT_SUPPORT_TRUE);
-	if (!inputs || !outputs)
-	{
-		fprintf(stderr, "!inputs || !outputs\n");
-		return (NULL);
-	}
-
-	tx->inputs = inputs;
-	tx->outputs = outputs;
 
 	all_unspent_size = llist_size(all_unspent);
 	fprintf(stderr, "llist_size: %d\n", all_unspent_size);
@@ -63,12 +43,7 @@ transaction_t *transaction_create(
 	}
 
 	if (amount > sender_bank)
-	{
 		fprintf(stderr, "Not enough money.\n");
-		/* llist_destroy(inputs, 1, (tx_in_t *)free); */
-		/* llist_destroy(outputs, 1, (tx_out_t *)free); */
-		return (NULL);
-	}
 
 	tx_out_pay = tx_out_create(amount, receiver_pub);
 	llist_add_node(outputs, tx_out_pay, ADD_NODE_REAR);
@@ -83,6 +58,47 @@ transaction_t *transaction_create(
 	for (i = 0; i < all_unspent_size; i++) /* sign inputs */
 		tx_in_sign((tx_in_t *)llist_get_node_at(inputs, i), tx->id,
 		sender, all_unspent);
+}
+
+/**
+ * transaction_create - creates a transaction
+ * @sender: contains the private key of the transaction sender
+ * @receiver: contains the public key of the transaction receiver
+ * @amount: amount to send
+ * @all_unspent: list of all the unspent outputs to date
+ *
+ * Return: created transaction, NULL on failure
+ */
+transaction_t *transaction_create(
+	EC_KEY const *sender,
+	EC_KEY const *receiver,
+	uint32_t amount,
+	llist_t *all_unspent)
+{
+	transaction_t *tx = NULL;
+	llist_t *inputs = NULL;
+	llist_t *outputs = NULL;
+
+	if (!sender || !receiver || !amount || !all_unspent)
+	{
+		fprintf(stderr, "!param\n");
+		return (NULL);
+	}
+
+	tx = (transaction_t *)malloc(sizeof(transaction_t));
+	if (!tx)
+		return (NULL);
+
+	inputs = llist_create(MT_SUPPORT_TRUE);
+	outputs = llist_create(MT_SUPPORT_TRUE);
+	if (!inputs || !outputs)
+		return (NULL);
+
+	tx->inputs = inputs;
+	tx->outputs = outputs;
+
+	inputs_and_outputs_generation(tx, inputs, outputs,
+		all_unspent, sender, receiver, amount);
 
 	return (tx);
 }
