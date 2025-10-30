@@ -69,11 +69,11 @@ transaction_t *transaction_create(
 		return (NULL);
 	}
 
-	tx_out_pay = tx_out_create(amount, (uint8_t *)receiver);
+	tx_out_pay = tx_out_create(amount, sender_pub);
 	llist_add_node(outputs, tx_out_pay, ADD_NODE_REAR);
 	if (sender_bank > amount)
 	{
-		tx_out_rtn = tx_out_create(sender_bank - amount, sender_pub);
+		tx_out_rtn = tx_out_create(sender_bank - amount, (uint8_t *)receiver);
 		llist_add_node(outputs, tx_out_rtn, ADD_NODE_REAR);
 	}
 
