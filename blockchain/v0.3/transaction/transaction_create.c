@@ -23,7 +23,7 @@ transaction_t *transaction_create(
 	uint8_t sender_pub[EC_PUB_LEN];
 	tx_out_t *tx_out_pay = NULL, *tx_out_rtn = NULL;
 	tx_in_t *tx_in = NULL;
-	int i;
+	int i, all_unspent_size;
 
 	if (!sender || !receiver || !amount || !all_unspent)
 	{
@@ -43,9 +43,14 @@ transaction_t *transaction_create(
 		return (NULL);
 	}
 
+	tx->inputs = inputs;
+	tx->outputs = outputs;
+
+	all_unspent_size = llist_size(all_unspent);
+	fprintf(stderr, "llist_size: %d\n", all_unspent_size);
 	ec_to_pub(sender, sender_pub);
 
-	for (i = 0; i < llist_size(all_unspent); i++)
+	for (i = 0; i < all_unspent_size; i++)
 	{
 		unspent_tx = (unspent_tx_out_t *)llist_get_node_at(all_unspent, i);
 		if (memcmp(unspent_tx->out.pub, sender_pub, EC_PUB_LEN) == 0)
@@ -74,7 +79,7 @@ transaction_t *transaction_create(
 
 	transaction_hash(tx, tx->id);
 
-	for (i = 0; i < llist_size(inputs); i++) /* sign inputs */
+	for (i = 0; i < all_unspent_size; i++) /* sign inputs */
 		tx_in_sign((tx_in_t *)llist_get_node_at(inputs, i), tx->id,
 		sender, all_unspent);
 
