@@ -20,7 +20,7 @@ transaction_t *transaction_create(
 	llist_t *inputs = NULL;
 	llist_t *outputs = NULL;
 	uint32_t sender_bank = 0;
-	uint8_t sender_pub[EC_PUB_LEN];
+	uint8_t sender_pub[EC_PUB_LEN], receiver_pub[EC_PUB_LEN];
 	tx_out_t *tx_out_pay = NULL, *tx_out_rtn = NULL;
 	tx_in_t *tx_in = NULL;
 	int i, all_unspent_size;
@@ -49,6 +49,7 @@ transaction_t *transaction_create(
 	all_unspent_size = llist_size(all_unspent);
 	fprintf(stderr, "llist_size: %d\n", all_unspent_size);
 	ec_to_pub(sender, sender_pub);
+	ec_to_pub(receiver, receiver_pub);
 
 	for (i = 0; i < all_unspent_size; i++)
 	{
@@ -69,11 +70,11 @@ transaction_t *transaction_create(
 		return (NULL);
 	}
 
-	tx_out_pay = tx_out_create(amount, sender_pub);
+	tx_out_pay = tx_out_create(amount, receiver_pub);
 	llist_add_node(outputs, tx_out_pay, ADD_NODE_REAR);
 	if (sender_bank > amount)
 	{
-		tx_out_rtn = tx_out_create(sender_bank - amount, (uint8_t *)receiver);
+		tx_out_rtn = tx_out_create(sender_bank - amount, sender_pub);
 		llist_add_node(outputs, tx_out_rtn, ADD_NODE_REAR);
 	}
 
