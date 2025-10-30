@@ -43,13 +43,11 @@ int inputs_and_outputs_generation(
 			sender_bank += unspent_tx->out.amount;
 		}
 	}
-
 	if (amount > sender_bank)
 	{
 		fprintf(stderr, "Not enough money.\n");
 		return (0);
 	}
-
 	tx_out_pay = tx_out_create(amount, receiver_pub);
 	llist_add_node(outputs, tx_out_pay, ADD_NODE_REAR);
 	if (sender_bank > amount)
@@ -57,9 +55,7 @@ int inputs_and_outputs_generation(
 		tx_out_rtn = tx_out_create(sender_bank - amount, sender_pub);
 		llist_add_node(outputs, tx_out_rtn, ADD_NODE_REAR);
 	}
-
 	transaction_hash(tx, tx->id);
-
 	for (i = 0; i < all_unspent_size; i++) /* sign inputs */
 		tx_in_sign((tx_in_t *)llist_get_node_at(inputs, i), tx->id,
 		sender, all_unspent);
