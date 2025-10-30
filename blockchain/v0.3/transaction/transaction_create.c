@@ -63,6 +63,8 @@ int inputs_and_outputs_generation(
 	for (i = 0; i < all_unspent_size; i++) /* sign inputs */
 		tx_in_sign((tx_in_t *)llist_get_node_at(inputs, i), tx->id,
 		sender, all_unspent);
+
+	return (1);
 }
 
 /**
