@@ -13,6 +13,8 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 	uint8_t test_hash[SHA256_DIGEST_LENGTH] = {0};
 	tx_in_t *input = NULL;
 	unspent_tx_out_t *unspent = NULL;
+	int input_size = SHA256_DIGEST_LENGTH * 3;
+	uint8_t input_buffer[input_size];
 
 	if (!transaction || !all_unspent)
 	{
@@ -49,8 +51,11 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 			{
 				found = 1;
 				/* verify sig of input using matching unspent's public key */
-				if (!ec_verify(ec_from_pub(unspent->out.pub), (uint8_t *)input,
-				sizeof(tx_in_t), &input->sig))
+				memcpy(input_buffer, input->block_hash, SHA256_DIGEST_LENGTH);
+				memcpy(input_buffer + SHA256_DIGEST_LENGTH, input->tx_id, SHA256_DIGEST_LENGTH);
+				memcpy(input_buffer + SHA256_DIGEST_LENGTH * 2, input->tx_out_hash, SHA256_DIGEST_LENGTH);
+				if (!ec_verify(ec_from_pub(unspent->out.pub), input_buffer,
+				input_size, &input->sig))
 				{
 					fprintf(stderr, "!ec_verify\n");
 					return (0);
