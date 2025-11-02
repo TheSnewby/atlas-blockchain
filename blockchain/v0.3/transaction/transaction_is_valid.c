@@ -14,7 +14,7 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 	tx_in_t *input = NULL;
 	unspent_tx_out_t *unspent = NULL;
 	int input_size = SHA256_DIGEST_LENGTH * 3;
-	uint8_t input_buffer[input_size];
+	EC_KEY *unspent_key = NULL;
 
 	if (!transaction || !all_unspent)
 	{
@@ -47,17 +47,16 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 		for (j = 0; j < all_unspent_size; j++)
 		{
 			unspent = (unspent_tx_out_t *)llist_get_node_at(all_unspent, j);
+			unspent_key = ec_from_pub(unspent->out.pub);
 			if (memcmp(input->block_hash, unspent->block_hash, SHA256_DIGEST_LENGTH) == 0)
 			{
 				found = 1;
 				/* verify sig of input using matching unspent's public key */
-				memcpy(input_buffer, input->block_hash, SHA256_DIGEST_LENGTH);
-				memcpy(input_buffer + SHA256_DIGEST_LENGTH, input->tx_id, SHA256_DIGEST_LENGTH);
-				memcpy(input_buffer + SHA256_DIGEST_LENGTH * 2, input->tx_out_hash, SHA256_DIGEST_LENGTH);
-				if (!ec_verify(ec_from_pub(unspent->out.pub), input_buffer,
+				if (!ec_verify(unspent_key, transaction->id,
 				input_size, &input->sig))
 				{
 					fprintf(stderr, "!ec_verify\n");
+					EC_KEY_free(unspent_key);
 					return (0);
 				}
 				break;
@@ -66,9 +65,11 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 		if (!found)
 		{
 			fprintf(stderr, "!found\n");
+			EC_KEY_free(unspent_key);
 			return (0);
 		}
 	}
 
+	EC_KEY_free(unspent_key);
 	return (1);
 }
