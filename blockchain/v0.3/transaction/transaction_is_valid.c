@@ -35,7 +35,8 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 
 	if (inputs_size != outputs_size)
 	{
-		fprintf(stderr, "!sizes\n");
+		fprintf(stderr, "!SIZES. inputs size: %d, outputs size %d, \
+			unspent_size: %d\n", inputs_size, outputs_size, all_unspent_size);
 		return (0);
 	}
 
