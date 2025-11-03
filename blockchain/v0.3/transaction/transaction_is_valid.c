@@ -18,12 +18,15 @@ uint32_t calculate_output_amount(transaction_t const *transaction)
 	{
 		out = (tx_out_t *)llist_get_node_at(transaction->outputs, 0);
 		output_amount += out->amount;
+		fprintf(stderr, "1st output: %d", out->amount);
 	}
 	if (out_size == 2)
 	{
 		out = (tx_out_t *)llist_get_node_at(transaction->outputs, 1);
 		output_amount -= out->amount;
+		fprintf(stderr, ", 2nd output: %d", out->amount);
 	}
+	fprintf(stderr, "\n");
 
 	/* perhaps add a check for out_size > 2? */
 
