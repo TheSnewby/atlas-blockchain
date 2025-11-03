@@ -27,13 +27,13 @@ uint32_t calculate_output_amount(transaction_t const *transaction)
 		if (memcmp(receiver_pub, out->pub, EC_PUB_LEN) == 0)
 			output_amount += out->amount;
 		else
-			output_amount -= out->amount;
+			output_amount += out->amount;
 
 		fprintf(stderr, ", 2nd output: %d", out->amount);
 	}
+	if (out_size > 2)
+		fprintf(stderr, "More than two outputs. out_size: %d\n", out_size);
 	fprintf(stderr, "\n");
-
-	/* perhaps add a check for out_size > 2? */
 
 	return (output_amount);
 }
