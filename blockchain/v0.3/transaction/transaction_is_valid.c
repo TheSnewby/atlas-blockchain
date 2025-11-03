@@ -42,11 +42,23 @@ uint32_t calculate_output_amount(transaction_t const *transaction)
  */
 int check_unspent_vs_input(unspent_tx_out_t *unspent, tx_in_t *input)
 {
-	if ((memcmp(input->block_hash, unspent->block_hash, SHA256_DIGEST_LENGTH) == 0) &&
+	if ((memcmp(input->block_hash, unspent->block_hash, SHA256_DIGEST_LENGTH)
+		== 0) &&
 		(memcmp(input->tx_id, unspent->tx_id, SHA256_DIGEST_LENGTH) == 0) &&
-		(memcmp(input->tx_out_hash, unspent->out.hash, SHA256_DIGEST_LENGTH) == 0))
+		(memcmp(input->tx_out_hash, unspent->out.hash, SHA256_DIGEST_LENGTH)
+		== 0))
 		return (1);
 	return (0);
+}
+
+/**
+ * verify_inputs - verifies inputs used in transaction vs unspent
+ * @transaction: transaction to verify
+ * @all_unspent: is the list of all unspent transaction outputs to date
+ */
+void verify_inputs()
+{
+	// pass by reference
 }
 
 /**
@@ -56,7 +68,8 @@ int check_unspent_vs_input(unspent_tx_out_t *unspent, tx_in_t *input)
  *
  * Return: 1 if the transaction is valid, 0 otherwise
  */
-int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
+int transaction_is_valid(transaction_t const *transaction,
+	llist_t *all_unspent)
 {
 	int i, j, inputs_size, outputs_size, all_unspent_size, found;
 	uint32_t output_amount = 0, input_amount = 0;
@@ -117,8 +130,10 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 	output_amount = calculate_output_amount(transaction);
 	if (output_amount != input_amount)
 	{
-		fprintf(stderr, "output_amount != input_amount. output_amount: %d, input_amount: %d\n", output_amount, input_amount);
-		fprintf(stderr, "output_size: %d, input_size: %d\n", outputs_size, inputs_size);
+		fprintf(stderr, "outputs != inputs outputs: %d, inputs: %d\n",
+			output_amount, input_amount);
+		fprintf(stderr, "output_size: %d, input_size: %d\n",
+			outputs_size, inputs_size);
 		EC_KEY_free(unspent_key);
 		return (0);
 	}
