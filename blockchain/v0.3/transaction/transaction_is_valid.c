@@ -1,6 +1,29 @@
 #include "blockchain.h"
 
 /**
+ * calculate_bank - verifies unspent amounts match the transaction
+ * @transaction: transaction to verify
+ *
+ * Return: sum of output amounts
+ */
+uint32_t calculate_bank(transaction_t const *transaction)
+{
+	int i, out_size;
+	uint32_t bank = 0;
+	tx_out_t *out = NULL;
+
+
+	out_size = llist_size(transaction->outputs);
+	for (i = 0; i < out_size; i++)
+	{
+		out = (tx_out_t *)llist_get_node_at(transaction->outputs, i);
+		bank += out->amount;
+	}
+
+	return (bank);
+}
+
+/**
  * transaction_is_valid - checks whether a transaction is valid
  * @transaction: transaction to verify
  * @all_unspent: is the list of all unspent transaction outputs to date
@@ -9,11 +32,11 @@
  */
 int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 {
-	int i, j, inputs_size, outputs_size, all_unspent_size, found;
+	int i, j, inputs_size, all_unspent_size, found;
+	uint32_t bank = 0, cost = 0;
 	uint8_t test_hash[SHA256_DIGEST_LENGTH] = {0};
 	tx_in_t *input = NULL;
 	unspent_tx_out_t *unspent = NULL;
-	int input_size = SHA256_DIGEST_LENGTH * 3;
 	EC_KEY *unspent_key = NULL;
 
 	if (!transaction || !all_unspent)
@@ -30,15 +53,7 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 	}
 
 	inputs_size = llist_size(transaction->inputs);
-	outputs_size = llist_size(transaction->outputs);
 	all_unspent_size = llist_size(all_unspent);
-
-	if (inputs_size != outputs_size)
-	{
-		fprintf(stderr, "!SIZES. inputs size: %d, outputs size %d, \
-			unspent_size: %d\n", inputs_size, outputs_size, all_unspent_size);
-		return (0);
-	}
 
 	/* O(n^2) doesn't matter with small sizes */
 	for (i = 0; i < inputs_size; i++) /* input verification with unspent */
@@ -54,12 +69,13 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 				found = 1;
 				/* verify sig of input using matching unspent's public key */
 				if (!ec_verify(unspent_key, transaction->id,
-				input_size, &input->sig))
+					SHA256_DIGEST_LENGTH, &input->sig))
 				{
 					fprintf(stderr, "!ec_verify\n");
 					EC_KEY_free(unspent_key);
 					return (0);
 				}
+				cost += unspent->out.amount;
 				break;
 			}
 		}
@@ -69,6 +85,13 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 			EC_KEY_free(unspent_key);
 			return (0);
 		}
+	}
+
+	if (calculate_bank(transaction) != cost)
+	{
+		fprintf(stderr, "bank != cost. bank: %d, cost: %d\n", bank, cost);
+		EC_KEY_free(unspent_key);
+		return (0);
 	}
 
 	EC_KEY_free(unspent_key);
