@@ -8,7 +8,7 @@
 blockchain_t *blockchain_create(void)
 {
 	blockchain_t *newBC = NULL;
-	llist_t *newLL = NULL;
+	llist_t *newLL = NULL, *unspent = NULL;
 	block_t *newB = NULL;
 	char *holberton = "Holberton School";
 	int data_len = strlen(holberton);
@@ -41,6 +41,8 @@ blockchain_t *blockchain_create(void)
 	newBC->chain = newLL;
 	if (llist_add_node(newLL, newB, ADD_NODE_FRONT))
 		return (NULL);
+
+	newBC->unspent = llist_create(MT_SUPPORT_TRUE);
 
 	return (newBC);
 }
