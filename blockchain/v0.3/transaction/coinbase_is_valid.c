@@ -15,52 +15,28 @@ int coinbase_is_valid(transaction_t const *coinbase, uint32_t block_index)
 	tx_out_t *tx_out = NULL;
 
 	if (!coinbase)
-	{
-		fprintf(stderr, "!coinbase\n");
 		return (0);
-	}
 
-	if(llist_size(coinbase->inputs) != 1 || llist_size(coinbase->outputs) != 1)
-	{
-		fprintf(stderr, "!size comparison\n");
+	if (llist_size(coinbase->inputs) != 1 || llist_size(coinbase->outputs) != 1)
 		return (0);
-	}
 
 	transaction_hash(coinbase, test_id);
 	if (memcmp(coinbase->id, test_id, SHA256_DIGEST_LENGTH) != 0)
-	{
-		fprintf(stderr, "!coinbase->id\n");
 		return (0);
-	}
 
-	tx_out = (tx_out_t *)llist_get_node_at(coinbase->outputs, 0); 
+	tx_out = (tx_out_t *)llist_get_node_at(coinbase->outputs, 0);
 	if (tx_out->amount != COINBASE_AMOUNT)
-	{
-		fprintf(stderr, "!COINBASE_AMOUNT\n");
 		return (0);
-	}
 
 	tx_in = (tx_in_t *)llist_get_node_at(coinbase->inputs, 0);
 	if (memcmp(tx_in->tx_out_hash, &block_index, sizeof(uint32_t)) != 0)
-	{
-		fprintf(stderr, "!block_index\n");
 		return (0);
-	}
 	if (memcmp(tx_in->block_hash, zeroed_buffer, SHA256_DIGEST_LENGTH) != 0)
-	{
-		fprintf(stderr, "!tx_in->block_hash\n");
 		return (0);
-	}
 	if (memcmp(tx_in->tx_id, zeroed_buffer, SHA256_DIGEST_LENGTH) != 0)
-	{
-		fprintf(stderr, "!tx_in->tx_id\n");
 		return (0);
-	}
 	if (memcmp(tx_in->sig.sig, zeroed_buffer, SHA256_DIGEST_LENGTH) != 0)
-	{
-		fprintf(stderr, "!tx_in->sig.sig\n");
 		return (0);
-	}
 
 	return (1);
 }
