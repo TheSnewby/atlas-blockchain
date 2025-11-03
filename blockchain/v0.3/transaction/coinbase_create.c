@@ -9,7 +9,7 @@
  *
  * Return: 1 on success, 0 on failure
  */
-int inputs_and_outputs_generation(transaction_t *tx, EC_KEY const *receiver,
+static int inputs_and_outputs_generation(transaction_t *tx, EC_KEY const *receiver,
 	uint32_t block_index, uint32_t amount)
 {
 	uint8_t receiver_pub[EC_PUB_LEN];
