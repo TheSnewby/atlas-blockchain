@@ -8,17 +8,24 @@
  */
 uint32_t calculate_output_amount(transaction_t const *transaction)
 {
-	int i, out_size;
+	int out_size;
 	uint32_t output_amount = 0;
 	tx_out_t *out = NULL;
 
 
 	out_size = llist_size(transaction->outputs);
-	for (i = 0; i < out_size; i++)
+	if (out_size >= 1)
 	{
-		out = (tx_out_t *)llist_get_node_at(transaction->outputs, i);
+		out = (tx_out_t *)llist_get_node_at(transaction->outputs, 0);
 		output_amount += out->amount;
 	}
+	if (out_size == 2)
+	{
+		out = (tx_out_t *)llist_get_node_at(transaction->outputs, 1);
+		output_amount -= out->amount;
+	}
+
+	/* perhaps add a check for out_size > 2? */
 
 	return (output_amount);
 }
@@ -88,9 +95,9 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 	}
 
 	output_amount = calculate_output_amount(transaction);
-	if (output_amount < input_amount)
+	if (output_amount != input_amount)
 	{
-		fprintf(stderr, "output_amount > input_amount. output_amount: %d, input_amount: %d\n", output_amount, input_amount);
+		fprintf(stderr, "output_amount != input_amount. output_amount: %d, input_amount: %d\n", output_amount, input_amount);
 		EC_KEY_free(unspent_key);
 		return (0);
 	}
