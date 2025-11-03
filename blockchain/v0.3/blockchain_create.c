@@ -8,7 +8,7 @@
 blockchain_t *blockchain_create(void)
 {
 	blockchain_t *newBC = NULL;
-	llist_t *newLL = NULL, *unspent = NULL;
+	llist_t *newLL = NULL;
 	block_t *newB = NULL;
 	char *holberton = "Holberton School";
 	int data_len = strlen(holberton);
