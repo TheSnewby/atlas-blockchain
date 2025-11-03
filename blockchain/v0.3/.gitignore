@@ -13,3 +13,8 @@ transaction/transaction_hash.c
 transaction/tx_in_sign-test
 transaction/transaction_create-test
 transaction/transaction_is_valid-test
+transaction/coinbase_create-test
+transaction/coinbase_is_valid-test
+transaction/transaction_destroy-test
+block_hash-test
+transaction/update_unspent-test

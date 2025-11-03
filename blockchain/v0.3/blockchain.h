@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "transaction.h"
+#include <arpa/inet.h>
 
 #define HOLBERTON_HASH \
 "\xc5\x2c\x26\xc8\xb5\x46\x16\x39" \
