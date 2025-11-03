@@ -10,20 +10,25 @@ uint32_t calculate_output_amount(transaction_t const *transaction)
 {
 	int out_size;
 	uint32_t output_amount = 0;
+	uint8_t receiver_pub[EC_PUB_LEN] = {0};
 	tx_out_t *out = NULL;
-
 
 	out_size = llist_size(transaction->outputs);
 	if (out_size >= 1)
 	{
 		out = (tx_out_t *)llist_get_node_at(transaction->outputs, 0);
 		output_amount += out->amount;
+		memcpy(receiver_pub, out->pub, EC_PUB_LEN);
 		fprintf(stderr, "1st output: %d", out->amount);
 	}
 	if (out_size == 2)
 	{
 		out = (tx_out_t *)llist_get_node_at(transaction->outputs, 1);
-		output_amount -= out->amount;
+		if (memcmp(receiver_pub, out->pub, EC_PUB_LEN) == 0)
+			output_amount += out->amount;
+		else
+			output_amount -= out->amount;
+
 		fprintf(stderr, ", 2nd output: %d", out->amount);
 	}
 	fprintf(stderr, "\n");
