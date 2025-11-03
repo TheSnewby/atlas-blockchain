@@ -56,8 +56,10 @@ int check_unspent_vs_input(unspent_tx_out_t *unspent, tx_in_t *input)
  * @transaction: transaction to verify
  * @all_unspent: is the list of all unspent transaction outputs to date
  * @input_amount: sum of matching amounts in inputs
+ *
+ * Return: 1 on sucess, 0 otherwise
  */
-void verify_inputs(transaction_t const *transaction, llist_t *all_unspent,
+int verify_inputs(transaction_t const *transaction, llist_t *all_unspent,
 	uint32_t *input_amount)
 {
 	int i, j, inputs_size, all_unspent_size, found;
@@ -85,7 +87,7 @@ void verify_inputs(transaction_t const *transaction, llist_t *all_unspent,
 				{
 					fprintf(stderr, "!ec_verify\n");
 					EC_KEY_free(unspent_key);
-					exit(0);
+					return (0);
 				}
 				*input_amount += unspent->out.amount;
 				break;
@@ -95,10 +97,11 @@ void verify_inputs(transaction_t const *transaction, llist_t *all_unspent,
 		{
 			fprintf(stderr, "!found\n");
 			EC_KEY_free(unspent_key);
-			exit(0);
+			return (0);
 		}
 	}
 	EC_KEY_free(unspent_key);
+	return (1);
 }
 
 /**
@@ -129,7 +132,8 @@ int transaction_is_valid(transaction_t const *transaction,
 	}
 
 	/* O(n^2) doesn't matter with small sizes */
-	verify_inputs(transaction, all_unspent, &input_amount);
+	if (!verify_inputs(transaction, all_unspent, &input_amount))
+		return (0);
 
 	output_amount = calculate_output_amount(transaction);
 	if (output_amount != input_amount)
