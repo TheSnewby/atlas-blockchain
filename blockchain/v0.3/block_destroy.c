@@ -9,7 +9,7 @@ void block_destroy(block_t *block)
 	if (!block)
 		return;
 
-	transaction_destroy(block->transactions);
+	llist_destroy(block->transactions, 1, transaction_destroy);
 
 	free(block);
 	block = 0;
