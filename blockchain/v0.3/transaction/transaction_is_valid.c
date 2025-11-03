@@ -1,15 +1,15 @@
 #include "blockchain.h"
 
 /**
- * calculate_bank - verifies unspent amounts match the transaction
+ * calculate_output_amount - verifies unspent amounts match the transaction
  * @transaction: transaction to verify
  *
  * Return: sum of output amounts
  */
-uint32_t calculate_bank(transaction_t const *transaction)
+uint32_t calculate_output_amount(transaction_t const *transaction)
 {
 	int i, out_size;
-	uint32_t bank = 0;
+	uint32_t output_amount = 0;
 	tx_out_t *out = NULL;
 
 
@@ -17,10 +17,10 @@ uint32_t calculate_bank(transaction_t const *transaction)
 	for (i = 0; i < out_size; i++)
 	{
 		out = (tx_out_t *)llist_get_node_at(transaction->outputs, i);
-		bank += out->amount;
+		output_amount += out->amount;
 	}
 
-	return (bank);
+	return (output_amount);
 }
 
 /**
@@ -33,7 +33,7 @@ uint32_t calculate_bank(transaction_t const *transaction)
 int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 {
 	int i, j, inputs_size, all_unspent_size, found;
-	uint32_t bank = 0, cost = 0;
+	uint32_t output_amount = 0, input_amount = 0;
 	uint8_t test_hash[SHA256_DIGEST_LENGTH] = {0};
 	tx_in_t *input = NULL;
 	unspent_tx_out_t *unspent = NULL;
@@ -75,7 +75,7 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 					EC_KEY_free(unspent_key);
 					return (0);
 				}
-				cost += unspent->out.amount;
+				input_amount += unspent->out.amount;
 				break;
 			}
 		}
@@ -87,10 +87,10 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 		}
 	}
 
-	bank = calculate_bank(transaction);
-	if (bank != cost)
+	output_amount = calculate_output_amount(transaction);
+	if (output_amount > input_amount)
 	{
-		fprintf(stderr, "bank != cost. bank: %d, cost: %d\n", bank, cost);
+		fprintf(stderr, "bank > input_amount. output_amount: %d, input_amount: %d\n", output_amount, input_amount);
 		EC_KEY_free(unspent_key);
 		return (0);
 	}
