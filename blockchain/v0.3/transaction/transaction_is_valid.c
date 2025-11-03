@@ -88,9 +88,9 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 	}
 
 	output_amount = calculate_output_amount(transaction);
-	if (output_amount > input_amount)
+	if (output_amount < input_amount)
 	{
-		fprintf(stderr, "bank > input_amount. output_amount: %d, input_amount: %d\n", output_amount, input_amount);
+		fprintf(stderr, "output_amount > input_amount. output_amount: %d, input_amount: %d\n", output_amount, input_amount);
 		EC_KEY_free(unspent_key);
 		return (0);
 	}
