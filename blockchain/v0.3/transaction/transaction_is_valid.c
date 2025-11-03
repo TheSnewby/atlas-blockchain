@@ -39,7 +39,7 @@ uint32_t calculate_output_amount(transaction_t const *transaction)
  */
 int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 {
-	int i, j, inputs_size, all_unspent_size, found;
+	int i, j, inputs_size, outputs_size, all_unspent_size, found;
 	uint32_t output_amount = 0, input_amount = 0;
 	uint8_t test_hash[SHA256_DIGEST_LENGTH] = {0};
 	tx_in_t *input = NULL;
@@ -60,6 +60,7 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 	}
 
 	inputs_size = llist_size(transaction->inputs);
+	outputs_size = llist_size(transaction->outputs);
 	all_unspent_size = llist_size(all_unspent);
 
 	/* O(n^2) doesn't matter with small sizes */
@@ -98,6 +99,7 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 	if (output_amount != input_amount)
 	{
 		fprintf(stderr, "output_amount != input_amount. output_amount: %d, input_amount: %d\n", output_amount, input_amount);
+		fprintf(stderr, "output_size: %d, input_size: %d\n", outputs_size, inputs_size);
 		EC_KEY_free(unspent_key);
 		return (0);
 	}
