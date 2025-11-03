@@ -31,6 +31,22 @@ uint32_t calculate_output_amount(transaction_t const *transaction)
 }
 
 /**
+ * check_unspent_vs_input - checks whether an unspent tx is part of the input
+ * @unspent: individual unspent transaction
+ * @input: individual input transaction
+ *
+ * Return: 1 if matching, 0 otherwise
+ */
+int check_unspent_vs_input(unspent_tx_out_t *unspent, tx_in_t *input)
+{
+	if ((memcmp(input->block_hash, unspent->block_hash, SHA256_DIGEST_LENGTH) == 0) &&
+		(memcmp(input->tx_id, unspent->tx_id, SHA256_DIGEST_LENGTH) == 0) &&
+		(memcmp(input->tx_out_hash, unspent->out.hash, SHA256_DIGEST_LENGTH) == 0))
+		return (1);
+	return (0);
+}
+
+/**
  * transaction_is_valid - checks whether a transaction is valid
  * @transaction: transaction to verify
  * @all_unspent: is the list of all unspent transaction outputs to date
@@ -72,7 +88,7 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 		{
 			unspent = (unspent_tx_out_t *)llist_get_node_at(all_unspent, j);
 			unspent_key = ec_from_pub(unspent->out.pub);
-			if (memcmp(input->block_hash, unspent->block_hash, SHA256_DIGEST_LENGTH) == 0)
+			if (check_unspent_vs_input(unspent, input))
 			{
 				found = 1;
 				/* verify sig of input using matching unspent's public key */
