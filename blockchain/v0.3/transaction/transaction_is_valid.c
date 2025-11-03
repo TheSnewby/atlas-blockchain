@@ -55,47 +55,19 @@ int check_unspent_vs_input(unspent_tx_out_t *unspent, tx_in_t *input)
  * verify_inputs - verifies inputs used in transaction vs unspent
  * @transaction: transaction to verify
  * @all_unspent: is the list of all unspent transaction outputs to date
+ * @input_amount: sum of matching amounts in inputs
  */
-void verify_inputs()
+void verify_inputs(transaction_t const *transaction, llist_t *all_unspent,
+	uint32_t *input_amount)
 {
-	// pass by reference
-}
-
-/**
- * transaction_is_valid - checks whether a transaction is valid
- * @transaction: transaction to verify
- * @all_unspent: is the list of all unspent transaction outputs to date
- *
- * Return: 1 if the transaction is valid, 0 otherwise
- */
-int transaction_is_valid(transaction_t const *transaction,
-	llist_t *all_unspent)
-{
-	int i, j, inputs_size, outputs_size, all_unspent_size, found;
-	uint32_t output_amount = 0, input_amount = 0;
-	uint8_t test_hash[SHA256_DIGEST_LENGTH] = {0};
+	int i, j, inputs_size, all_unspent_size, found;
 	tx_in_t *input = NULL;
 	unspent_tx_out_t *unspent = NULL;
 	EC_KEY *unspent_key = NULL;
 
-	if (!transaction || !all_unspent)
-	{
-		fprintf(stderr, "!params\n");
-		return (0);
-	}
-
-	transaction_hash(transaction, test_hash); /* transaction hash verification */
-	if (memcmp(test_hash, transaction->id, SHA256_DIGEST_LENGTH) != 0)
-	{
-		fprintf(stderr, "!transaction hash\n");
-		return (0);
-	}
-
 	inputs_size = llist_size(transaction->inputs);
-	outputs_size = llist_size(transaction->outputs);
 	all_unspent_size = llist_size(all_unspent);
 
-	/* O(n^2) doesn't matter with small sizes */
 	for (i = 0; i < inputs_size; i++) /* input verification with unspent */
 	{
 		input = (tx_in_t *)llist_get_node_at(transaction->inputs, i);
@@ -113,9 +85,9 @@ int transaction_is_valid(transaction_t const *transaction,
 				{
 					fprintf(stderr, "!ec_verify\n");
 					EC_KEY_free(unspent_key);
-					return (0);
+					exit(0);
 				}
-				input_amount += unspent->out.amount;
+				*input_amount += unspent->out.amount;
 				break;
 			}
 		}
@@ -123,9 +95,41 @@ int transaction_is_valid(transaction_t const *transaction,
 		{
 			fprintf(stderr, "!found\n");
 			EC_KEY_free(unspent_key);
-			return (0);
+			exit(0);
 		}
 	}
+	EC_KEY_free(unspent_key);
+}
+
+/**
+ * transaction_is_valid - checks whether a transaction is valid
+ * @transaction: transaction to verify
+ * @all_unspent: is the list of all unspent transaction outputs to date
+ *
+ * Return: 1 if the transaction is valid, 0 otherwise
+ */
+int transaction_is_valid(transaction_t const *transaction,
+	llist_t *all_unspent)
+{
+	uint8_t test_hash[SHA256_DIGEST_LENGTH] = {0};
+	uint32_t output_amount = 0, input_amount = 0;
+
+
+	if (!transaction || !all_unspent)
+	{
+		fprintf(stderr, "!params\n");
+		return (0);
+	}
+
+	transaction_hash(transaction, test_hash); /* transaction hash verification */
+	if (memcmp(test_hash, transaction->id, SHA256_DIGEST_LENGTH) != 0)
+	{
+		fprintf(stderr, "!transaction hash\n");
+		return (0);
+	}
+
+	/* O(n^2) doesn't matter with small sizes */
+	verify_inputs(transaction, all_unspent, &input_amount);
 
 	output_amount = calculate_output_amount(transaction);
 	if (output_amount != input_amount)
@@ -133,11 +137,9 @@ int transaction_is_valid(transaction_t const *transaction,
 		fprintf(stderr, "outputs != inputs outputs: %d, inputs: %d\n",
 			output_amount, input_amount);
 		fprintf(stderr, "output_size: %d, input_size: %d\n",
-			outputs_size, inputs_size);
-		EC_KEY_free(unspent_key);
+			llist_size(transaction->outputs), llist_size(transaction->inputs));
 		return (0);
 	}
 
-	EC_KEY_free(unspent_key);
 	return (1);
 }
