@@ -87,7 +87,8 @@ int transaction_is_valid(transaction_t const *transaction, llist_t *all_unspent)
 		}
 	}
 
-	if (calculate_bank(transaction) != cost)
+	bank = calculate_bank(transaction);
+	if (bank != cost)
 	{
 		fprintf(stderr, "bank != cost. bank: %d, cost: %d\n", bank, cost);
 		EC_KEY_free(unspent_key);
