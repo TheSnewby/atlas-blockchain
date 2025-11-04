@@ -33,7 +33,7 @@ blockchain_t *blockchain_create(void)
 		return (NULL);
 
 	/* Create new Linked List for Blockchain */
-	newLL = llist_create(MT_SUPPORT_TRUE);
+	newLL = llist_create(MT_SUPPORT_FALSE);
 	if (!newLL)
 		return (NULL);
 
@@ -42,7 +42,9 @@ blockchain_t *blockchain_create(void)
 	if (llist_add_node(newLL, newB, ADD_NODE_FRONT))
 		return (NULL);
 
-	newBC->unspent = llist_create(MT_SUPPORT_TRUE);
+	newBC->unspent = llist_create(MT_SUPPORT_FALSE);
+	if (!newBC->unspent)
+		return (NULL);
 
 	return (newBC);
 }

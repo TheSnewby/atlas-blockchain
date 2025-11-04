@@ -58,8 +58,8 @@ transaction_t *coinbase_create(EC_KEY const *receiver, uint32_t block_index)
 	if (!tx)
 		return (NULL);
 
-	inputs = llist_create(MT_SUPPORT_TRUE);
-	outputs = llist_create(MT_SUPPORT_TRUE);
+	inputs = llist_create(MT_SUPPORT_FALSE);
+	outputs = llist_create(MT_SUPPORT_FALSE);
 	if (!inputs || !outputs)
 		return (NULL);
 

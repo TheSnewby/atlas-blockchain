@@ -34,7 +34,7 @@ block_t *block_create(block_t const *prev,
 	new_block->data.len = true_data_len;
 	memset(new_block->hash, 0, SHA256_DIGEST_LENGTH);
 
-	new_block->transactions = llist_create(MT_SUPPORT_TRUE);
+	new_block->transactions = llist_create(MT_SUPPORT_FALSE);
 
 	return (new_block);
 }
