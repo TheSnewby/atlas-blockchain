@@ -10,10 +10,24 @@
 uint8_t *block_hash(block_t const *block,
 	uint8_t hash_buf[SHA256_DIGEST_LENGTH])
 {
+	int transactions_size = sizeof(tx_in_t) + sizeof(tx_out_t);
+	unsigned char *buffer = NULL;
+
 	if (!block || !hash_buf)
 		return (NULL);
 
-	SHA256((unsigned char *)block,
-	block->data.len + sizeof(block->info), hash_buf);
+	buffer = (unsigned char *)malloc(block->data.len + sizeof(block->info) +
+	transactions_size);
+	memcpy(buffer, (unsigned char *)block,
+	sizeof(block->info) + block->data.len);
+	memcpy(buffer + sizeof(block->info) + block->data.len,
+	((transaction_t *)block->transactions)->inputs, sizeof(tx_in_t));
+	memcpy(buffer + sizeof(block->info) + block->data.len + sizeof(tx_in_t),
+	((transaction_t *)block->transactions)->outputs, sizeof(tx_out_t));
+
+	SHA256(buffer, block->data.len + sizeof(block->info) +
+	transactions_size, hash_buf);
+
+	free(buffer);
 	return (hash_buf);
 }
