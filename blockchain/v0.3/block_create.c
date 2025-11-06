@@ -21,6 +21,9 @@ block_t *block_create(block_t const *prev,
 	true_data_len = (data_len <= BLOCKCHAIN_DATA_MAX) ?
 	data_len : BLOCKCHAIN_DATA_MAX;
 
+	if (data[true_data_len] != '\0')
+		fprintf(stderr, "\tDEBUG: MISSING NULL BYTE in BLOCK_CREATE.C\n\t");
+
 	new_block = (block_t *)malloc(sizeof(block_t));
 	if (!new_block)
 		return (NULL);
