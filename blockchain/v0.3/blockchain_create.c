@@ -42,7 +42,6 @@ blockchain_t *blockchain_create(void)
 	newBC->chain = newLL;
 	if (llist_add_node(newLL, newB, ADD_NODE_FRONT))
 		return (NULL);
-
 	newBC->unspent = llist_create(MT_SUPPORT_FALSE);
 	if (!newBC->unspent)
 		return (NULL);
