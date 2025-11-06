@@ -20,18 +20,17 @@ uint8_t *block_hash(block_t const *block,
 		return (NULL);
 	}
 
+	offset = sizeof(block->info) + block->data.len;
+
 	tx_size = llist_size(block->transactions); /* perhaps add -1 check */
-	buffer = (unsigned char *)malloc(block->data.len + sizeof(block->info) +
-	SHA256_DIGEST_LENGTH * tx_size);
+	buffer = (unsigned char *)malloc(offset + SHA256_DIGEST_LENGTH * tx_size);
 	if (!buffer)
 	{
 		fprintf(stderr, "!buffer\n");
 		return (NULL);
 	}
 
-	memcpy(buffer, (unsigned char *)block,
-	sizeof(block->info) + block->data.len);
-	offset = sizeof(block->info) + block->data.len;
+	memcpy(buffer, (unsigned char *)block, offset);
 
 	for (i = 0; i < tx_size; i++)
 	{
@@ -41,8 +40,7 @@ uint8_t *block_hash(block_t const *block,
 		tx->id, SHA256_DIGEST_LENGTH);
 	}
 
-	SHA256(buffer, block->data.len + sizeof(block->info) +
-	SHA256_DIGEST_LENGTH, hash_buf);
+	SHA256(buffer, offset +	SHA256_DIGEST_LENGTH, hash_buf);
 
 	free(buffer);
 	return (hash_buf);
