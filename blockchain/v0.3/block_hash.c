@@ -29,11 +29,15 @@ uint8_t *block_hash(block_t const *block,
 	memcpy(buffer, (unsigned char *)block,
 	sizeof(block->info) + block->data.len);
 	fprintf(stderr, "1\n");
+
 	memcpy(buffer + sizeof(block->info) + block->data.len,
-	((transaction_t *)block->transactions)->inputs, sizeof(tx_in_t));
+	llist_get_node_at(((transaction_t *)block->transactions)->inputs, 0),
+	sizeof(tx_in_t));
 	fprintf(stderr, "2\n");
+
 	memcpy(buffer + sizeof(block->info) + block->data.len + sizeof(tx_in_t),
-	((transaction_t *)block->transactions)->outputs, sizeof(tx_out_t));
+	llist_get_node_at(((transaction_t *)block->transactions)->outputs, 0),
+	sizeof(tx_out_t));
 	fprintf(stderr, "3\n");
 
 	SHA256(buffer, block->data.len + sizeof(block->info) +
