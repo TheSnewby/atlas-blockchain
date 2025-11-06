@@ -10,11 +10,8 @@
 uint8_t *block_hash(block_t const *block,
 	uint8_t hash_buf[SHA256_DIGEST_LENGTH])
 {
-	int transactions_size = sizeof(tx_in_t) + sizeof(tx_out_t);
 	unsigned char *buffer = NULL;
-	tx_in_t *in = NULL;
-	tx_out_t *out = NULL;
-	transaction_t *tr = NULL;
+	transaction_t *tx = NULL;
 
 	if (!block || !hash_buf)
 	{
@@ -23,36 +20,30 @@ uint8_t *block_hash(block_t const *block,
 	}
 
 	buffer = (unsigned char *)malloc(block->data.len + sizeof(block->info) +
-	transactions_size);
+	SHA256_DIGEST_LENGTH);
 	if (!buffer)
 	{
 		fprintf(stderr, "!buffer\n");
 		return (NULL);
 	}
-
 	// fprintf(stderr, "-1\n");
 
-	tr = (transaction_t *)llist_get_node_at(block->transactions, 0);
-	in = (tx_in_t *)llist_get_node_at(tr->inputs, 0);
-	out = (tx_out_t *)llist_get_node_at(tr->outputs, 0);
+	tx = (transaction_t *)llist_get_node_at(block->transactions, 0);
 	// fprintf(stderr, "0\n");
 
 	memcpy(buffer, (unsigned char *)block,
 	sizeof(block->info) + block->data.len);
 	// fprintf(stderr, "1\n");
 
-	memcpy(buffer + sizeof(block->info) + block->data.len, (unsigned char*)in, sizeof(tx_in_t));
+	memcpy(buffer + sizeof(block->info) + block->data.len,
+	tx->id, SHA256_DIGEST_LENGTH);
 	// fprintf(stderr, "2\n");
 
-	memcpy(buffer + sizeof(block->info) + block->data.len + sizeof(tx_in_t),
-	(unsigned char *)out, sizeof(tx_out_t));
+	SHA256(buffer, block->data.len + sizeof(block->info) +
+	SHA256_DIGEST_LENGTH, hash_buf);
 	// fprintf(stderr, "3\n");
 
-	SHA256(buffer, block->data.len + sizeof(block->info) +
-	transactions_size, hash_buf);
-	// fprintf(stderr, "4\n");
-
 	free(buffer);
-	// fprintf(stderr, "5\n");
+	// fprintf(stderr, "4\n");
 	return (hash_buf);
 }
