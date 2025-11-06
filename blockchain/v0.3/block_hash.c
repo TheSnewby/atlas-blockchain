@@ -30,29 +30,29 @@ uint8_t *block_hash(block_t const *block,
 		return (NULL);
 	}
 
-	fprintf(stderr, "-1\n");
+	// fprintf(stderr, "-1\n");
 
 	tr = (transaction_t *)llist_get_node_at(block->transactions, 0);
 	in = (tx_in_t *)llist_get_node_at(tr->inputs, 0);
 	out = (tx_out_t *)llist_get_node_at(tr->outputs, 0);
-	fprintf(stderr, "0\n");
+	// fprintf(stderr, "0\n");
 
 	memcpy(buffer, (unsigned char *)block,
 	sizeof(block->info) + block->data.len);
-	fprintf(stderr, "1\n");
+	// fprintf(stderr, "1\n");
 
 	memcpy(buffer + sizeof(block->info) + block->data.len, (unsigned char*)in, sizeof(tx_in_t));
-	fprintf(stderr, "2\n");
+	// fprintf(stderr, "2\n");
 
 	memcpy(buffer + sizeof(block->info) + block->data.len + sizeof(tx_in_t),
 	(unsigned char *)out, sizeof(tx_out_t));
-	fprintf(stderr, "3\n");
+	// fprintf(stderr, "3\n");
 
 	SHA256(buffer, block->data.len + sizeof(block->info) +
 	transactions_size, hash_buf);
-	fprintf(stderr, "4\n");
+	// fprintf(stderr, "4\n");
 
 	free(buffer);
-	fprintf(stderr, "5\n");
+	// fprintf(stderr, "5\n");
 	return (hash_buf);
 }
