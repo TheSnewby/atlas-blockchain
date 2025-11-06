@@ -46,5 +46,7 @@ blockchain_t *blockchain_create(void)
 	if (!newBC->unspent)
 		return (NULL);
 
+	newB->transactions = NULL;
+
 	return (newBC);
 }
