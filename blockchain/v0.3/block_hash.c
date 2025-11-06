@@ -12,6 +12,7 @@ uint8_t *block_hash(block_t const *block,
 {
 	unsigned char *buffer = NULL;
 	transaction_t *tx = NULL;
+	int tx_size, i, offset;
 
 	if (!block || !hash_buf)
 	{
@@ -19,31 +20,30 @@ uint8_t *block_hash(block_t const *block,
 		return (NULL);
 	}
 
+	tx_size = llist_size(block->transactions); /* perhaps add -1 check */
 	buffer = (unsigned char *)malloc(block->data.len + sizeof(block->info) +
-	SHA256_DIGEST_LENGTH);
+	SHA256_DIGEST_LENGTH * tx_size);
 	if (!buffer)
 	{
 		fprintf(stderr, "!buffer\n");
 		return (NULL);
 	}
-	// fprintf(stderr, "-1\n");
-
-	tx = (transaction_t *)llist_get_node_at(block->transactions, 0);
-	// fprintf(stderr, "0\n");
 
 	memcpy(buffer, (unsigned char *)block,
 	sizeof(block->info) + block->data.len);
-	// fprintf(stderr, "1\n");
+	offset = sizeof(block->info) + block->data.len;
 
-	memcpy(buffer + sizeof(block->info) + block->data.len,
-	tx->id, SHA256_DIGEST_LENGTH);
-	// fprintf(stderr, "2\n");
+	for (i = 0; i < tx_size; i++)
+	{
+		tx = (transaction_t *)llist_get_node_at(block->transactions, i);
+
+		memcpy(buffer + offset + i * SHA256_DIGEST_LENGTH,
+		tx->id, SHA256_DIGEST_LENGTH);
+	}
 
 	SHA256(buffer, block->data.len + sizeof(block->info) +
 	SHA256_DIGEST_LENGTH, hash_buf);
-	// fprintf(stderr, "3\n");
 
 	free(buffer);
-	// fprintf(stderr, "4\n");
 	return (hash_buf);
 }
