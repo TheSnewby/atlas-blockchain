@@ -31,7 +31,7 @@ uint8_t *block_hash(block_t const *block,
 	}
 
 	fprintf(stderr, "{DEBUG} block->data[%d]: %s\n",
-		block->info.index, block->data);
+		block->info.index, block->data.buffer);
 	memcpy(buffer, (unsigned char *)block, offset);
 
 	for (i = 0; i < tx_size; i++)
