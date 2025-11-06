@@ -26,9 +26,7 @@ blockchain_t *blockchain_create(void)
 	memcpy(newB->data.buffer, holberton, data_len);
 	newB->data.len = data_len;
 	memcpy(newB->hash, HOLBERTON_HASH, SHA256_DIGEST_LENGTH);
-	newB->transactions = llist_create(MT_SUPPORT_FALSE);
-	if (!newB->transactions)
-		return (NULL);
+	newB->transactions = NULL;
 
 	/* Create Blockchain */
 	newBC = (blockchain_t *)malloc(sizeof(blockchain_t));
