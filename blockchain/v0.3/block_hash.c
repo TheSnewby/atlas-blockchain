@@ -12,6 +12,8 @@ uint8_t *block_hash(block_t const *block,
 {
 	int transactions_size = sizeof(tx_in_t) + sizeof(tx_out_t);
 	unsigned char *buffer = NULL;
+	tx_in_t *in = NULL;
+	tx_out_t *out = NULL;
 
 	if (!block || !hash_buf)
 	{
@@ -26,18 +28,19 @@ uint8_t *block_hash(block_t const *block,
 		fprintf(stderr, "!buffer\n");
 		return (NULL);
 	}
+
+	in = (tx_in_t *)llist_get_node_at(((transaction_t *)block->transactions)->inputs, 0);
+	out = (tx_out_t *)llist_get_node_at(((transaction_t *)block->transactions)->outputs, 0);
+
 	memcpy(buffer, (unsigned char *)block,
 	sizeof(block->info) + block->data.len);
 	fprintf(stderr, "1\n");
 
-	memcpy(buffer + sizeof(block->info) + block->data.len,
-	(tx_in_t *)llist_get_node_at(((transaction_t *)block->transactions)->inputs, 0),
-	sizeof(tx_in_t));
+	memcpy(buffer + sizeof(block->info) + block->data.len, (unsigned char*)in, sizeof(tx_in_t));
 	fprintf(stderr, "2\n");
 
 	memcpy(buffer + sizeof(block->info) + block->data.len + sizeof(tx_in_t),
-	(tx_out_t *)llist_get_node_at(((transaction_t *)block->transactions)->outputs, 0),
-	sizeof(tx_out_t));
+	(unsigned char *)out, sizeof(tx_out_t));
 	fprintf(stderr, "3\n");
 
 	SHA256(buffer, block->data.len + sizeof(block->info) +
