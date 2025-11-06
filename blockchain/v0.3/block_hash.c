@@ -14,6 +14,7 @@ uint8_t *block_hash(block_t const *block,
 	unsigned char *buffer = NULL;
 	tx_in_t *in = NULL;
 	tx_out_t *out = NULL;
+	transaction_t *tr = NULL;
 
 	if (!block || !hash_buf)
 	{
@@ -31,10 +32,10 @@ uint8_t *block_hash(block_t const *block,
 
 	fprintf(stderr, "-1\n");
 
-	in = (tx_in_t *)llist_get_node_at(((transaction_t *)block->transactions)->inputs, 0);
-	out = (tx_out_t *)llist_get_node_at(((transaction_t *)block->transactions)->outputs, 0);
+	tr = (transaction_t *)llist_get_node_at(block->transactions, 0);
+	in = (tx_in_t *)llist_get_node_at(tr->inputs, 0);
+	out = (tx_out_t *)llist_get_node_at(tr->outputs, 0);
 	fprintf(stderr, "0\n");
-
 
 	memcpy(buffer, (unsigned char *)block,
 	sizeof(block->info) + block->data.len);
