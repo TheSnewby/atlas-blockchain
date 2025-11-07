@@ -105,7 +105,7 @@ uint8_t *block_hash(block_t const *,
 	uint8_t [SHA256_DIGEST_LENGTH]);
 int blockchain_serialize(blockchain_t const *, char const *);
 blockchain_t *blockchain_deserialize(char const *);
-int block_is_valid(block_t const *, block_t const *);
+int block_is_valid(block_t const *, block_t const *, llist_t *all_unspent);
 
 void _blockchain_destroy(blockchain_t *);
 void _blockchain_print(blockchain_t const *);
