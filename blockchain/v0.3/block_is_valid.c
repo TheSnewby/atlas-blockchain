@@ -4,9 +4,11 @@
  * block_is_valid - verifies that a Block is valid
  * @block: the Block to check
  * @prev_block: previous Block in the Blockchain, or NULL if first Block
+ * @all_unspent: llist of unspent transaction outputs
  * Return: 0 on success, 1 on failure
  */
-int block_is_valid(block_t const *block, block_t const *prev_block)
+int block_is_valid(block_t const *block, block_t const *prev_block,
+	llist_t *all_unspent)
 {
 	uint8_t prev_hash[SHA256_DIGEST_LENGTH] = {0};
 	uint8_t current_hash[SHA256_DIGEST_LENGTH] = {0};
@@ -40,6 +42,12 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 	if (sizeof(block->data.buffer) > BLOCKCHAIN_DATA_MAX)
 		return (1);
 	if (!hash_matches_difficulty(block->hash, block->info.difficulty))
+		return (1);
+	if ((llist_size(block->transactions) <= 0) ||
+	(llist_size(prev_block->transactions) <= 0))
+		return (1);
+	if ((!coinbase_is_valid(llist_get_node_at(block->transactions , 0), 0)) ||
+	!coinbase_is_valid(llist_get_node_at(prev_block->transactions, 0), 0))
 		return (1);
 
 	return (0);
