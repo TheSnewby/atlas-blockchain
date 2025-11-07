@@ -67,7 +67,7 @@ int block_is_valid(block_t const *block, block_t const *prev_block,
 		return (1);
 	if (!hash_matches_difficulty(block->hash, block->info.difficulty))
 		return (1);
-	if (!coinbase_check(block, prev_block, all_unspent))
+	if (coinbase_check(block, prev_block, all_unspent) != 0)
 		return (1);
 
 	return (0);
