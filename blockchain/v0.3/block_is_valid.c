@@ -10,7 +10,8 @@
 int coinbase_check(block_t const *block, block_t const *prev_block,
 	llist_t *all_unspent)
 {
-	if ((llist_size(block->transactions) <= 0) || (llist_size(prev_block) <= 0))
+	(void)all_unspent;
+	if ((llist_size(block->transactions) <= 0) || (llist_size(prev_block->transactions) <= 0))
 		return (0);
 
 	if ((!coinbase_is_valid(llist_get_head(block->transactions), block->info.index)) ||
@@ -19,6 +20,7 @@ int coinbase_check(block_t const *block, block_t const *prev_block,
 		fprintf(stderr, "DEBUG: !coinbase_is_valid\n");
 		return (1);
 	}
+	return (0);
 }
 
 /**
