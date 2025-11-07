@@ -11,6 +11,7 @@ int coinbase_check(block_t const *block, block_t const *prev_block,
 	llist_t *all_unspent)
 {
 	(void)all_unspent;
+	(void)prev_block;
 	if (llist_size(block->transactions) <= 0)
 	{
 		fprintf(stderr, "DEBUG: !llist_size\n");
