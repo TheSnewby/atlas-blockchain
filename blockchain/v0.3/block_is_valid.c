@@ -44,12 +44,6 @@ int block_is_valid(block_t const *block, block_t const *prev_block,
 		return (1);
 	if (!hash_matches_difficulty(block->hash, block->info.difficulty))
 		return (1);
-	if ((llist_size(block->transactions) <= 0) ||
-	(llist_size(prev_block->transactions) <= 0))
-	{
-		fprintf(stderr, "DEBUG: llist_size\n");
-		return (1);
-	}
 	if ((!coinbase_is_valid(llist_get_node_at(block->transactions , 0), block->info.index)) ||
 	!coinbase_is_valid(llist_get_node_at(prev_block->transactions, 0), prev_block->info.index))
 	{
