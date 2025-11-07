@@ -11,11 +11,13 @@ int coinbase_check(block_t const *block, block_t const *prev_block,
 	llist_t *all_unspent)
 {
 	(void)all_unspent;
-	if ((llist_size(block->transactions) <= 0) || (llist_size(prev_block->transactions) <= 0))
-		return (0);
+	if (llist_size(block->transactions) <= 0)
+	{
+		fprintf(stderr, "DEBUG: !llist_size\n");
+		return (1);
+	}
 
-	if ((!coinbase_is_valid(llist_get_head(block->transactions), block->info.index)) ||
-	(!coinbase_is_valid(llist_get_head(prev_block->transactions), prev_block->info.index)))
+	if (!coinbase_is_valid(llist_get_head(block->transactions), block->info.index))
 	{
 		fprintf(stderr, "DEBUG: !coinbase_is_valid\n");
 		return (1);
