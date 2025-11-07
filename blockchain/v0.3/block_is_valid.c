@@ -1,6 +1,27 @@
 #include "blockchain.h"
 
 /**
+ * coinbase_check - checks coinbase for validity
+ * @block: the Block to check
+ * @prev_block: previous Block in the Blockchain, or NULL if first Block
+ * @all_unspent: llist of unspent transaction outputs
+ * Return: 0 on success, 1 on failure
+ */
+int coinbase_check(block_t const *block, block_t const *prev_block,
+	llist_t *all_unspent)
+{
+	if ((llist_size(block->transactions) <= 0) || (llist_size(prev_block) <= 0))
+		return (0);
+
+	if ((!coinbase_is_valid(llist_get_head(block->transactions), block->info.index)) ||
+	(!coinbase_is_valid(llist_get_head(prev_block->transactions), prev_block->info.index)))
+	{
+		fprintf(stderr, "DEBUG: !coinbase_is_valid\n");
+		return (1);
+	}
+}
+
+/**
  * block_is_valid - verifies that a Block is valid
  * @block: the Block to check
  * @prev_block: previous Block in the Blockchain, or NULL if first Block
@@ -44,12 +65,8 @@ int block_is_valid(block_t const *block, block_t const *prev_block,
 		return (1);
 	if (!hash_matches_difficulty(block->hash, block->info.difficulty))
 		return (1);
-	if ((!coinbase_is_valid(llist_get_node_at(block->transactions , 0), block->info.index)) ||
-	!coinbase_is_valid(llist_get_node_at(prev_block->transactions, 0), prev_block->info.index))
-	{
-		fprintf(stderr, "DEBUG: coinbase_is_valid\n");
+	if (!coinbase_check(block, prev_block, all_unspent))
 		return (1);
-	}
 
 	return (0);
 }
