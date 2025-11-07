@@ -47,8 +47,8 @@ int block_is_valid(block_t const *block, block_t const *prev_block,
 	if ((llist_size(block->transactions) <= 0) ||
 	(llist_size(prev_block->transactions) <= 0))
 		return (1);
-	if ((!coinbase_is_valid(llist_get_node_at(block->transactions , 0), 0)) ||
-	!coinbase_is_valid(llist_get_node_at(prev_block->transactions, 0), 0))
+	if ((!coinbase_is_valid(llist_get_node_at(block->transactions , 0), block->info.index)) ||
+	!coinbase_is_valid(llist_get_node_at(prev_block->transactions, 0), prev_block->info.index))
 		return (1);
 
 	return (0);
