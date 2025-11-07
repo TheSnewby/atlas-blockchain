@@ -13,6 +13,7 @@ int block_is_valid(block_t const *block, block_t const *prev_block,
 	uint8_t prev_hash[SHA256_DIGEST_LENGTH] = {0};
 	uint8_t current_hash[SHA256_DIGEST_LENGTH] = {0};
 
+	(void)all_unspent;
 	if (!block || (block->info.index != 0 && !prev_block))
 		return (1);
 	if (prev_block && (block->info.index != prev_block->info.index + 1))
