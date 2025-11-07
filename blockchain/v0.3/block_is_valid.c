@@ -18,7 +18,8 @@ int coinbase_check(block_t const *block, block_t const *prev_block,
 		return (1);
 	}
 
-	if (!coinbase_is_valid(llist_get_head(block->transactions), block->info.index))
+	if (!coinbase_is_valid(llist_get_head(block->transactions),
+	block->info.index))
 	{
 		fprintf(stderr, "DEBUG: !coinbase_is_valid\n");
 		return (1);
