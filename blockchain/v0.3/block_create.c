@@ -30,6 +30,7 @@ block_t *block_create(block_t const *prev,
 	new_block->info.difficulty = 0;
 	new_block->info.nonce = 0;
 	new_block->info.timestamp = time(NULL); /* might need (uint64_t) */
+	memset(new_block->data.buffer, 0, BLOCKCHAIN_DATA_MAX);
 	memcpy(new_block->data.buffer, data, true_data_len);
 	new_block->data.len = true_data_len;
 	memset(new_block->hash, 0, SHA256_DIGEST_LENGTH);
