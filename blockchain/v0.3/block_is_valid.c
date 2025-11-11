@@ -53,8 +53,12 @@ int block_is_valid(block_t const *block, block_t const *prev_block,
 			return (1);
 	}
 	if (prev_block)
+	{
 		SHA256((unsigned char *)prev_block,
 		prev_block->data.len + sizeof(prev_block->info), prev_hash);
+		block_hash(prev_block, prev_hash);
+	}
+	block_hash(block, current_hash);
 	SHA256((unsigned char *)block,
 	block->data.len + sizeof(block->info), current_hash);
 	if (prev_block &&
