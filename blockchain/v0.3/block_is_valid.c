@@ -57,20 +57,41 @@ int block_is_valid(block_t const *block, block_t const *prev_block,
 	block_hash(block, current_hash);
 	if (prev_block &&
 		memcmp(prev_hash, prev_block->hash, SHA256_DIGEST_LENGTH) != 0)
+	{
+		fprintf(stderr, "1\n");
 		return (1);
+	}
 	if (prev_block && (memcmp(prev_block->hash, block->info.prev_hash,
 		SHA256_DIGEST_LENGTH) != 0))
+	{
+		fprintf(stderr, "2\n");
 		return (1);
+	}
 	if (memcmp(current_hash, block->hash, SHA256_DIGEST_LENGTH) != 0)
+	{
+		fprintf(stderr, "3\n");
 		return (1);
+	}
 	if (block->data.len > BLOCKCHAIN_DATA_MAX)
+	{
+		fprintf(stderr, "4\n");
 		return (1);
+	}
 	if (sizeof(block->data.buffer) > BLOCKCHAIN_DATA_MAX)
+	{
+		fprintf(stderr, "5\n");
 		return (1);
+	}
 	if (!hash_matches_difficulty(block->hash, block->info.difficulty))
+	{
+		fprintf(stderr, "6\n");
 		return (1);
+	}
 	if (coinbase_check(block, prev_block, all_unspent) != 0)
+	{
+		fprintf(stderr, "7\n");
 		return (1);
+	}
 
 	return (0);
 }
