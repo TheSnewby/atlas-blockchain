@@ -44,7 +44,6 @@ uint8_t *block_hash(block_t const *block,
 	}
 
 	SHA256(buffer, offset +	SHA256_DIGEST_LENGTH, hash_buf);
-	memcpy(block->hash, hash_buf, SHA256_DIGEST_LENGTH);
 
 	free(buffer);
 	return (hash_buf);
