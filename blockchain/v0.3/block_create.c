@@ -25,7 +25,7 @@ block_t *block_create(block_t const *prev,
 	if (!new_block)
 		return (NULL);
 
-	memcpy(new_block->info.prev_hash, prev->hash, 32);
+	memcpy(new_block->info.prev_hash, prev->hash, SHA256_DIGEST_LENGTH);
 	new_block->info.index = prev->info.index + 1;
 	new_block->info.difficulty = 0;
 	new_block->info.nonce = 0;
