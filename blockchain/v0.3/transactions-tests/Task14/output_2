@@ -1,0 +1,188 @@
+Block mined: [20] 0000008c7dbcf245a67aaefa9a2a3f2a9d1fbf93455cf426f6808f2219bb998e
+Unspent transaction outputs [3]: [
+	{
+		block_hash: 0000008c7dbcf245a67aaefa9a2a3f2a9d1fbf93455cf426f6808f2219bb998e
+		tx_id: 59129acaa558135abd6a4628e044fadb4ed2f59cd975f962ab654f5f80b9dfea
+		amount: 50
+		pub: 04f3df797cc8aea0a54eee57e4c4c4f96f5ebfaebcad268a52aa95d862e871ca49b4fc2a05e5dbf11be10b6c63f7f9a9e3c47f34cbf258c95331a02233277837f4
+	}
+	{
+		block_hash: 0000008c7dbcf245a67aaefa9a2a3f2a9d1fbf93455cf426f6808f2219bb998e
+		tx_id: 46450aa5d45fab4bb14b971028778b0df303469d5e58043dd3be4205d1b24e11
+		amount: 200
+		pub: 04d2335bcb8e3a1013ff18648b55a939dcec35ea6cb8a497089d73d5a79b069f74255d4442032b61cf328d0da7fcf8822380f7876b09ffc2002f5957a619ceb0c4
+	}
+	{
+		block_hash: 0000008c7dbcf245a67aaefa9a2a3f2a9d1fbf93455cf426f6808f2219bb998e
+		tx_id: 46450aa5d45fab4bb14b971028778b0df303469d5e58043dd3be4205d1b24e11
+		amount: 300
+		pub: 04f3df797cc8aea0a54eee57e4c4c4f96f5ebfaebcad268a52aa95d862e871ca49b4fc2a05e5dbf11be10b6c63f7f9a9e3c47f34cbf258c95331a02233277837f4
+	}
+]
+Block mined: [20] 00000fd09b34a7478cdea128faadb5d8b9721d9fde85870b6ed5ea54a07abce0
+Unspent transaction outputs [4]: [
+	{
+		block_hash: 0000008c7dbcf245a67aaefa9a2a3f2a9d1fbf93455cf426f6808f2219bb998e
+		tx_id: 46450aa5d45fab4bb14b971028778b0df303469d5e58043dd3be4205d1b24e11
+		amount: 200
+		pub: 04d2335bcb8e3a1013ff18648b55a939dcec35ea6cb8a497089d73d5a79b069f74255d4442032b61cf328d0da7fcf8822380f7876b09ffc2002f5957a619ceb0c4
+	}
+	{
+		block_hash: 00000fd09b34a7478cdea128faadb5d8b9721d9fde85870b6ed5ea54a07abce0
+		tx_id: 7063b35f0497bb09c9cfbdca8ac79c93d9497d7457929a5aec0425ba66c2b267
+		amount: 50
+		pub: 04f3df797cc8aea0a54eee57e4c4c4f96f5ebfaebcad268a52aa95d862e871ca49b4fc2a05e5dbf11be10b6c63f7f9a9e3c47f34cbf258c95331a02233277837f4
+	}
+	{
+		block_hash: 00000fd09b34a7478cdea128faadb5d8b9721d9fde85870b6ed5ea54a07abce0
+		tx_id: bc2fc6035171bf1824b09cd60bad41526a71d51ea1ee3b70f326f9687cbd270a
+		amount: 200
+		pub: 04d2335bcb8e3a1013ff18648b55a939dcec35ea6cb8a497089d73d5a79b069f74255d4442032b61cf328d0da7fcf8822380f7876b09ffc2002f5957a619ceb0c4
+	}
+	{
+		block_hash: 00000fd09b34a7478cdea128faadb5d8b9721d9fde85870b6ed5ea54a07abce0
+		tx_id: bc2fc6035171bf1824b09cd60bad41526a71d51ea1ee3b70f326f9687cbd270a
+		amount: 150
+		pub: 04f3df797cc8aea0a54eee57e4c4c4f96f5ebfaebcad268a52aa95d862e871ca49b4fc2a05e5dbf11be10b6c63f7f9a9e3c47f34cbf258c95331a02233277837f4
+	}
+]
+Blockchain: {
+	chain [3]: [
+		Block: {
+			info: {
+				index: 0,
+				difficulty: 0,
+				timestamp: 1537578000,
+				nonce: 0,
+				prev_hash: 0000000000000000000000000000000000000000000000000000000000000000
+			},
+			data: {
+				buffer: "Holberton School",
+				len: 16
+			},
+			transactions [-1]: [
+			]
+			hash: c52c26c8b5461639635d8edf2a97d48d0c8e0009c817f2b1d3d7ff2f04515803
+		}
+		Block: {
+			info: {
+				index: 1,
+				difficulty: 20,
+				timestamp: 1234567890,
+				nonce: 308512,
+				prev_hash: c52c26c8b5461639635d8edf2a97d48d0c8e0009c817f2b1d3d7ff2f04515803
+			},
+			data: {
+				buffer: "Holberton School",
+				len: 16
+			},
+			transactions [2]: [
+				Transaction: {
+					inputs [1]: [
+						{
+							block_hash: 0000000000000000000000000000000000000000000000000000000000000000,
+							tx_id: 0000000000000000000000000000000000000000000000000000000000000000,
+							tx_out_hash: 0100000000000000000000000000000000000000000000000000000000000000,
+							sig: null
+						}
+					],
+					outputs [1]: [
+						{
+							amount: 50,
+							pub: 04f3df797cc8aea0a54eee57e4c4c4f96f5ebfaebcad268a52aa95d862e871ca49b4fc2a05e5dbf11be10b6c63f7f9a9e3c47f34cbf258c95331a02233277837f4,
+							hash: 7d6e0cc4a8029ca4872e06c13d63404b039e43a0f5731f22737a0aadf1ecbc84
+						}
+					],
+					id: 59129acaa558135abd6a4628e044fadb4ed2f59cd975f962ab654f5f80b9dfea
+				}
+				Transaction: {
+					inputs [1]: [
+						{
+							block_hash: a02c2c79d6051cbe1e05e2fcc10f8a541e9b6de692839e533bee5569532da557,
+							tx_id: a3b9f94cc3473801a0a65057d94664db4bacbfdad8d19432ae9c495debba3833,
+							tx_out_hash: 3577879fa4b357f5b7b0d82056615c3747296c2460a14446acb621da708bd3a0,
+							sig: 00000000
+						}
+					],
+					outputs [2]: [
+						{
+							amount: 200,
+							pub: 04d2335bcb8e3a1013ff18648b55a939dcec35ea6cb8a497089d73d5a79b069f74255d4442032b61cf328d0da7fcf8822380f7876b09ffc2002f5957a619ceb0c4,
+							hash: 055ea1462bf9daaaad0cd2571b85f078c3aec682a326155e203e00ea9d541ce6
+						}
+						{
+							amount: 300,
+							pub: 04f3df797cc8aea0a54eee57e4c4c4f96f5ebfaebcad268a52aa95d862e871ca49b4fc2a05e5dbf11be10b6c63f7f9a9e3c47f34cbf258c95331a02233277837f4,
+							hash: ba92b9d98913e1b9aca2eeee7abcbaea519732be706d6d1b59f71865b56018fb
+						}
+					],
+					id: 46450aa5d45fab4bb14b971028778b0df303469d5e58043dd3be4205d1b24e11
+				}
+			]
+			hash: 0000008c7dbcf245a67aaefa9a2a3f2a9d1fbf93455cf426f6808f2219bb998e
+		}
+		Block: {
+			info: {
+				index: 2,
+				difficulty: 20,
+				timestamp: 1234567890,
+				nonce: 963213,
+				prev_hash: 0000008c7dbcf245a67aaefa9a2a3f2a9d1fbf93455cf426f6808f2219bb998e
+			},
+			data: {
+				buffer: "Software Engineering",
+				len: 20
+			},
+			transactions [2]: [
+				Transaction: {
+					inputs [1]: [
+						{
+							block_hash: 0000000000000000000000000000000000000000000000000000000000000000,
+							tx_id: 0000000000000000000000000000000000000000000000000000000000000000,
+							tx_out_hash: 0200000000000000000000000000000000000000000000000000000000000000,
+							sig: null
+						}
+					],
+					outputs [1]: [
+						{
+							amount: 50,
+							pub: 04f3df797cc8aea0a54eee57e4c4c4f96f5ebfaebcad268a52aa95d862e871ca49b4fc2a05e5dbf11be10b6c63f7f9a9e3c47f34cbf258c95331a02233277837f4,
+							hash: 7d6e0cc4a8029ca4872e06c13d63404b039e43a0f5731f22737a0aadf1ecbc84
+						}
+					],
+					id: 7063b35f0497bb09c9cfbdca8ac79c93d9497d7457929a5aec0425ba66c2b267
+				}
+				Transaction: {
+					inputs [2]: [
+						{
+							block_hash: 0000008c7dbcf245a67aaefa9a2a3f2a9d1fbf93455cf426f6808f2219bb998e,
+							tx_id: 59129acaa558135abd6a4628e044fadb4ed2f59cd975f962ab654f5f80b9dfea,
+							tx_out_hash: 7d6e0cc4a8029ca4872e06c13d63404b039e43a0f5731f22737a0aadf1ecbc84,
+							sig: 00000000
+						}
+						{
+							block_hash: 0000008c7dbcf245a67aaefa9a2a3f2a9d1fbf93455cf426f6808f2219bb998e,
+							tx_id: 46450aa5d45fab4bb14b971028778b0df303469d5e58043dd3be4205d1b24e11,
+							tx_out_hash: ba92b9d98913e1b9aca2eeee7abcbaea519732be706d6d1b59f71865b56018fb,
+							sig: 01000000
+						}
+					],
+					outputs [2]: [
+						{
+							amount: 200,
+							pub: 04d2335bcb8e3a1013ff18648b55a939dcec35ea6cb8a497089d73d5a79b069f74255d4442032b61cf328d0da7fcf8822380f7876b09ffc2002f5957a619ceb0c4,
+							hash: 055ea1462bf9daaaad0cd2571b85f078c3aec682a326155e203e00ea9d541ce6
+						}
+						{
+							amount: 150,
+							pub: 04f3df797cc8aea0a54eee57e4c4c4f96f5ebfaebcad268a52aa95d862e871ca49b4fc2a05e5dbf11be10b6c63f7f9a9e3c47f34cbf258c95331a02233277837f4,
+							hash: 7d99fb7df7acbc0c18ebdc28393b9d3928c6e6a3c405d1e05cc7dc5cbff08324
+						}
+					],
+					id: bc2fc6035171bf1824b09cd60bad41526a71d51ea1ee3b70f326f9687cbd270a
+				}
+			]
+			hash: 00000fd09b34a7478cdea128faadb5d8b9721d9fde85870b6ed5ea54a07abce0
+		}
+	]
+}

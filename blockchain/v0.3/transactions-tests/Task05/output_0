@@ -1,0 +1,18 @@
+Transaction: {
+	inputs [1]: [
+			{
+				block_hash: a02c2c79d6051cbe1e05e2fcc10f8a541e9b6de692839e533bee5569532da557,
+				tx_id: a3b9f94cc3473801a0a65057d94664db4bacbfdad8d19432ae9c495debba3833,
+				tx_out_hash: 3577879fa4b357f5b7b0d82056615c3747296c2460a14446acb621da708bd3a0,
+				sig: 00000000
+			}
+	],
+	outputs [1]: [
+			{
+				amount: 500,
+				pub: 04d2335bcb8e3a1013ff18648b55a939dcec35ea6cb8a497089d73d5a79b069f74255d4442032b61cf328d0da7fcf8822380f7876b09ffc2002f5957a619ceb0c4,
+				hash: 1e643f6e2a618ed084e9ba89408ba7f734b18e8bb3455610a7480eb3aa04dab6
+			}
+	],
+	id: fabefdd5d1445bb79c55e6e7c3af0d83a1fd38a0b4285138d17a21bc9eb54e0e
+}

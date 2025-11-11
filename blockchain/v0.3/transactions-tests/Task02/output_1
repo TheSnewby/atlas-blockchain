@@ -1,0 +1,6 @@
+Transaction input: {
+	block_hash: a02c2c79d6051cbe1e05e2fcc10f8a541e9b6de692839e533bee5569532da557,
+	tx_id: a3b9f94cc3473801a0a65057d94664db4bacbfdad8d19432ae9c495debba3833,
+	tx_out_hash: 1fa7df32aacb6de47ba56bc4492e2125cd0a5c1cba2b435ef867004074f826e0
+	sig: null
+}

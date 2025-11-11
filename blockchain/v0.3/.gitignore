@@ -19,3 +19,4 @@ transaction/transaction_destroy-test
 block_hash-test
 transaction/update_unspent-test
 transaction/block_create_and__destroy-test
+transactions_tests/

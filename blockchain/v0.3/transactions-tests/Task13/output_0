@@ -1,0 +1,55 @@
+Block mined: [20] 000007095ab930fc96cc0e6a5d82e7003791530e59cab82eff2ab259b37a1108
+Blockchain: {
+	chain [2]: [
+		Block: {
+			info: {
+				index: 0,
+				difficulty: 0,
+				timestamp: 1537578000,
+				nonce: 0,
+				prev_hash: 0000000000000000000000000000000000000000000000000000000000000000
+			},
+			data: {
+				buffer: "Holberton School",
+				len: 16
+			},
+			transactions [-1]: [
+			]
+			hash: c52c26c8b5461639635d8edf2a97d48d0c8e0009c817f2b1d3d7ff2f04515803
+		}
+		Block: {
+			info: {
+				index: 1,
+				difficulty: 20,
+				timestamp: 1234567890,
+				nonce: 1117949,
+				prev_hash: c52c26c8b5461639635d8edf2a97d48d0c8e0009c817f2b1d3d7ff2f04515803
+			},
+			data: {
+				buffer: "Holberton School",
+				len: 16
+			},
+			transactions [1]: [
+				Transaction: {
+					inputs [1]: [
+						{
+							block_hash: 0000000000000000000000000000000000000000000000000000000000000000,
+							tx_id: 0000000000000000000000000000000000000000000000000000000000000000,
+							tx_out_hash: 0100000000000000000000000000000000000000000000000000000000000000,
+							sig: null
+						}
+					],
+					outputs [1]: [
+						{
+							amount: 50,
+							pub: 04f3df797cc8aea0a54eee57e4c4c4f96f5ebfaebcad268a52aa95d862e871ca49b4fc2a05e5dbf11be10b6c63f7f9a9e3c47f34cbf258c95331a02233277837f4,
+							hash: 7d6e0cc4a8029ca4872e06c13d63404b039e43a0f5731f22737a0aadf1ecbc84
+						}
+					],
+					id: 59129acaa558135abd6a4628e044fadb4ed2f59cd975f962ab654f5f80b9dfea
+				}
+			]
+			hash: 000007095ab930fc96cc0e6a5d82e7003791530e59cab82eff2ab259b37a1108
+		}
+	]
+}

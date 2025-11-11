@@ -1,0 +1,23 @@
+Blockchain: {
+	chain [2]: [
+		Block: {
+			info: { 0, 0, 1537578000, 0, 0000000000000000000000000000000000000000000000000000000000000000 },
+			data: { "Holberton School", 16 },
+			transactions [-1]: [
+			]
+			hash: c52c26c8b5461639635d8edf2a97d48d0c8e0009c817f2b1d3d7ff2f04515803
+		}
+		Block: {
+			info: { 1, 0, 1234567890, 0, c52c26c8b5461639635d8edf2a97d48d0c8e0009c817f2b1d3d7ff2f04515803 },
+			data: { "Holberton School", 16 },
+			transactions [1]: [
+				Transaction: {
+					amount: 50 from 1 inputs,
+					receiver: 04f3df797cc8aea0a54eee57e4c4c4f96f5ebfaebcad268a52aa95d862e871ca49b4fc2a05e5dbf11be10b6c63f7f9a9e3c47f34cbf258c95331a02233277837f4
+					id: 59129acaa558135abd6a4628e044fadb4ed2f59cd975f962ab654f5f80b9dfea
+				}
+			]
+			hash: 95ca88ae2ff5a8d11f67d0a991ecdf08c44a02b4eaadcc3a3dfd9fe924e21ada
+		}
+	]
+}

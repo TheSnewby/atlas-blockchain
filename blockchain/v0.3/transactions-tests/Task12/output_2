@@ -1,0 +1,47 @@
+Blockchain: {
+	chain [4]: [
+		Block: {
+			info: { 0, 0, 1537578000, 0, 0000000000000000000000000000000000000000000000000000000000000000 },
+			data: { "Holberton School", 16 },
+			transactions [-1]: [
+			]
+			hash: c52c26c8b5461639635d8edf2a97d48d0c8e0009c817f2b1d3d7ff2f04515803
+		}
+		Block: {
+			info: { 1, 0, 1234567890, 0, c52c26c8b5461639635d8edf2a97d48d0c8e0009c817f2b1d3d7ff2f04515803 },
+			data: { "Holberton School", 16 },
+			transactions [1]: [
+				Transaction: {
+					amount: 50 from 1 inputs,
+					receiver: 04f3df797cc8aea0a54eee57e4c4c4f96f5ebfaebcad268a52aa95d862e871ca49b4fc2a05e5dbf11be10b6c63f7f9a9e3c47f34cbf258c95331a02233277837f4
+					id: 59129acaa558135abd6a4628e044fadb4ed2f59cd975f962ab654f5f80b9dfea
+				}
+			]
+			hash: 95ca88ae2ff5a8d11f67d0a991ecdf08c44a02b4eaadcc3a3dfd9fe924e21ada
+		}
+		Block: {
+			info: { 2, 0, 1234567890, 0, 95ca88ae2ff5a8d11f67d0a991ecdf08c44a02b4eaadcc3a3dfd9fe924e21ada },
+			data: { "Software", 8 },
+			transactions [1]: [
+				Transaction: {
+					amount: 50 from 1 inputs,
+					receiver: 04f3df797cc8aea0a54eee57e4c4c4f96f5ebfaebcad268a52aa95d862e871ca49b4fc2a05e5dbf11be10b6c63f7f9a9e3c47f34cbf258c95331a02233277837f4
+					id: 7063b35f0497bb09c9cfbdca8ac79c93d9497d7457929a5aec0425ba66c2b267
+				}
+			]
+			hash: 5b0979270f0664c395d19e286b202987fe6465bfbf9a6025ab9c0549d75bfdb5
+		}
+		Block: {
+			info: { 3, 0, 1234567890, 0, 5b0979270f0664c395d19e286b202987fe6465bfbf9a6025ab9c0549d75bfdb5 },
+			data: { "Engineering", 11 },
+			transactions [1]: [
+				Transaction: {
+					amount: 50 from 1 inputs,
+					receiver: 04f3df797cc8aea0a54eee57e4c4c4f96f5ebfaebcad268a52aa95d862e871ca49b4fc2a05e5dbf11be10b6c63f7f9a9e3c47f34cbf258c95331a02233277837f4
+					id: f35ef8317f48b084d74b1cea2eafee032f193707369aeb4f1b590f76dfb61296
+				}
+			]
+			hash: 9df35471f0ae3d7bbc9a3a6f39785199434bf9024919620238d36a6f902dc9c1
+		}
+	]
+}
