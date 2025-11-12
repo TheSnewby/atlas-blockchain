@@ -1,5 +1,15 @@
 #include "blockchain.h"
 
+void _print_hex_bufferz(uint8_t const *buf, size_t len)
+{
+	size_t i;
+
+	for (i = 0; buf && i < len; i++)
+		printf("%02x", buf[i]);
+
+	fflush(NULL);
+}
+
 /**
  * coinbase_check - checks coinbase for validity
  * @block: the Block to check
@@ -58,7 +68,11 @@ int block_is_valid(block_t const *block, block_t const *prev_block,
 	if (prev_block &&
 		memcmp(prev_hash, prev_block->hash, SHA256_DIGEST_LENGTH) != 0)
 	{
-		fprintf(stderr, "1\n");
+		fprintf(stderr, "1\nprev_hash: ");
+		_print_hex_bufferz(prev_hash, SHA256_DIGEST_LENGTH);
+		fprintf(stderr, "\nprv_blk_h: ");
+		_print_hex_bufferz(prev_block->hash, SHA256_DIGEST_LENGTH);
+		fprintf(stderr, "\n");
 		return (1);
 	}
 	if (prev_block && (memcmp(prev_block->hash, block->info.prev_hash,
