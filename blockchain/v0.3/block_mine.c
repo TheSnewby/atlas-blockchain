@@ -11,9 +11,7 @@ void block_mine(block_t *block)
 		block->info.nonce < UINT64_MAX; block->info.nonce++)
 	{
 		/* GENERATE A HASH */
-		SHA256((unsigned char *)block,
-		block->data.len + sizeof(block->info),
-		block->hash);
+		block_hash(block, block->hash);
 
 		/* CHECK */
 		if (hash_matches_difficulty(block->hash, block->info.difficulty))

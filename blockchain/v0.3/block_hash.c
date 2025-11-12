@@ -30,8 +30,10 @@ uint8_t *block_hash(block_t const *block,
 		return (NULL);
 	}
 
-	fprintf(stderr, "{DEBUG} block->data[%d]: %.*s\n",
-		block->info.index, block->data.len, block->data.buffer);
+	/**
+	 * fprintf(stderr, "{DEBUG} block->data[%d]: %.*s\n",
+	 * block->info.index, block->data.len, block->data.buffer);
+	 */
 
 	memcpy(buffer, (unsigned char *)block, offset);
 
