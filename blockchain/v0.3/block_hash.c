@@ -23,7 +23,9 @@ uint8_t *block_hash(block_t const *block,
 	offset = sizeof(block->info) + block->data.len;
 
 	tx_size = llist_size(block->transactions); /* perhaps add -1 check */
-	buffer = (unsigned char *)malloc(offset + SHA256_DIGEST_LENGTH * tx_size);
+	if (tx_size == -1)
+		tx_size = 0;
+	buffer = (unsigned char *)malloc(offset + tx_size * SHA256_DIGEST_LENGTH);
 	if (!buffer)
 	{
 		fprintf(stderr, "!buffer\n");
@@ -45,7 +47,7 @@ uint8_t *block_hash(block_t const *block,
 		tx->id, SHA256_DIGEST_LENGTH);
 	}
 
-	SHA256(buffer, offset +	SHA256_DIGEST_LENGTH, hash_buf);
+	SHA256(buffer, offset +	tx_size * SHA256_DIGEST_LENGTH, hash_buf);
 
 	free(buffer);
 	return (hash_buf);
