@@ -62,7 +62,7 @@ llist_t *update_unspent(
 			for (k = 0; k < in_size && un_found == 0; k++) /* inputs of tx */
 			{
 				in = llist_get_node_at(tx->inputs, k);
-				if (input_matches_unspent(in, block_hash, all_unspent))
+				if (input_matches_unspent(in, un, block_hash))
 					un_found = 1;
 			}
 		}
