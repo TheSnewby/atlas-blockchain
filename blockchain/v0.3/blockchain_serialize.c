@@ -1,18 +1,6 @@
 #include "blockchain.h"
 
 /**
- * isBigEndian - finds whether the format is big or small endian
- *
- * Return: 0 on little and 1 on big
- */
-int isBigEndian(void)
-{
-	int i = 1;
-
-	return (!*((char *)&i));
-}
-
-/**
  * swap_endian32 - swaps value to little endian
  * @val: value to be swapped
  *
@@ -130,8 +118,9 @@ int writeBlk(void *blk, unsigned int a, void *fd)
 int blockchain_serialize(blockchain_t const *blockchain, char const *path)
 {
 	FILE *fd = NULL;
-	int isBigEnd = isBigEndian() + 1, hblk_blocks = 0, un_hblk_blocks = 0;
+	int isBigEnd, hblk_blocks = 0, un_hblk_blocks = 0, i = 1;
 
+	int isBigEnd = (!*((char *)&i)) + 1;
 
 	if (!blockchain || !path)
 		return (-1);
