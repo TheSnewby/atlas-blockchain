@@ -43,19 +43,21 @@ int writeUnspentBlk(void *blk, unsigned int a, void *fd)
  * @blk: individual block to print
  * @a: unused variable required by llist_for_each()
  * @fd: file descriptor to fwrite to
+ * @isBigEnd: 1 if is big endian, 0 otherwise
  * Return: 0 on success
  */
 int writeBlk(void *blk, unsigned int a, void *fd)
 {
 	block_t *block = (block_t *)blk;
 	FILE *f = (FILE *)fd;
-	int txs_size, i, j, isBigEnd = isBigEndian() + 1, in_size, out_size, temp;
+	int txs_size, i, j, isBigEnd, in_size, out_size, temp;
 	transaction_t *tx = NULL;
 	(void)a;
 	tx_in_t *in = NULL;
 	tx_out_t *out = NULL;
 
 	txs_size = llist_size(block->transactions);
+	isBigEnd = (!*((char *)&i)) + 1;
 
 	fwrite(&block->info.index, sizeof(int), 1, f);
 	fwrite(&block->info.difficulty, sizeof(int), 1, f);
