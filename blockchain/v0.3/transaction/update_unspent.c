@@ -4,8 +4,11 @@
  * add_tx_outputs - adds tx outputs to new unspent llist
  * @transactions: list of validated transactions
  * @new_unspent_txns: current list of unspent transaction outputs
+ * @block_hash: hash of the validated block that contains the
+ *  transaction list transactions
  */
-void add_tx_outputs(llist_t *transactions, llist_t *new_unspent_txns)
+void add_tx_outputs(llist_t *transactions, llist_t *new_unspent_txns,
+	uint8_t block_hash[SHA256_DIGEST_LENGTH])
 {
 	int i, j, txs_size, out_size;
 	transaction_t *tx = NULL;
@@ -64,11 +67,10 @@ llist_t *update_unspent(
 	uint8_t block_hash[SHA256_DIGEST_LENGTH],
 	llist_t *all_unspent)
 {
-	int i, j, k, txs_size, in_size, out_size, unspent_size, un_found;
+	int i, j, k, txs_size, in_size, unspent_size, un_found;
 	llist_t *new_unspent_txns = NULL;
 	transaction_t *tx = NULL;
 	tx_in_t *in = NULL;
-	tx_out_t *out = NULL;
 	unspent_tx_out_t *un = NULL;
 
 	if (!transactions || !block_hash || !all_unspent)
@@ -99,7 +101,7 @@ llist_t *update_unspent(
 			llist_add_node(new_unspent_txns, un, ADD_NODE_REAR);
 	}
 
-	add_tx_outputs(transactions, new_unspent_txns);
+	add_tx_outputs(transactions, new_unspent_txns, block_hash);
 
 	llist_destroy(all_unspent, 1, free);
 	return (new_unspent_txns);
