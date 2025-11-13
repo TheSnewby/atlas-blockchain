@@ -16,7 +16,6 @@ void add_tx_outputs(llist_t *transactions, llist_t *new_unspent_txns,
 	unspent_tx_out_t *un = NULL;
 
 	txs_size = llist_size(transactions);
-	new_unspent_txns = llist_create(MT_SUPPORT_FALSE);
 
 	for (i = 0; i < txs_size; i++) /* add txns outputs to new_unspent_txns */
 	{
