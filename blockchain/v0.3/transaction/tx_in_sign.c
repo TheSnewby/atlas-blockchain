@@ -20,9 +20,24 @@ sig_t *tx_in_sign(
 	unspent_tx_out_t *unspent = NULL, *target_unspent = NULL;
 	int i;
 
-	if (!in || !tx_id || !sender || !all_unspent)
+	if (!in)
 	{
-		fprintf(stderr, "!param in tx_in_sign\n");
+		fprintf(stderr, "!param in tx_in_sign: !in\n");
+		return (NULL);
+	}
+	if (!tx_id)
+	{
+		fprintf(stderr, "!param in tx_in_sign: !tx_id\n");
+		return (NULL);
+	}
+	if (!sender)
+	{
+		fprintf(stderr, "!param in tx_in_sign: !sender\n");
+		return (NULL);
+	}
+	if (!all_unspent)
+	{
+		fprintf(stderr, "!param in tx_in_sign: !all_unspent\n");
 		return (NULL);
 	}
 
