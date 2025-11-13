@@ -122,7 +122,7 @@ int blockchain_serialize(blockchain_t const *blockchain, char const *path)
 	FILE *fd = NULL;
 	int isBigEnd, hblk_blocks = 0, un_hblk_blocks = 0, i = 1;
 
-	int isBigEnd = (!*((char *)&i)) + 1;
+	isBigEnd = (!*((char *)&i)) + 1;
 
 	if (!blockchain || !path)
 		return (-1);
