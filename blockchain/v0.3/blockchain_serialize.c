@@ -15,12 +15,15 @@ int isBigEndian(void)
 /**
  * swap_endian32 - swaps value to little endian
  * @val: value to be swapped
+ *
+ * Return: little endian value
  */
-uint32_t swap_endian32(uint32_t val) {
-    return ((val >> 24) & 0xFF) |
-           ((val >> 8) & 0xFF00) |
-           ((val << 8) & 0xFF0000) |
-           ((val << 24) & 0xFF000000);
+uint32_t swap_endian32(uint32_t val)
+{
+	return (((val >> 24) & 0xFF) |
+	((val >> 8) & 0xFF00) |
+	((val << 8) & 0xFF0000) |
+	((val << 24) & 0xFF000000));
 }
 
 /**
@@ -87,7 +90,7 @@ int writeBlk(void *blk, unsigned int a, void *fd)
 			fwrite(&in_size, sizeof(int), 1, f);
 			fwrite(&out_size, sizeof(int), 1, f);
 		}
-		else 
+		else
 		{
 			temp = swap_endian32(in_size);
 			fwrite(&temp, sizeof(int), 1, f);
@@ -133,7 +136,6 @@ int blockchain_serialize(blockchain_t const *blockchain, char const *path)
 	if (!blockchain || !path)
 		return (-1);
 
-	
 	hblk_blocks = llist_size(blockchain->chain);
 	un_hblk_blocks = llist_size(blockchain->unspent);
 	fd = fopen(path, "wb");
@@ -146,8 +148,6 @@ int blockchain_serialize(blockchain_t const *blockchain, char const *path)
 	fwrite(&isBigEnd, 1, 1, fd); /* endian */
 	fwrite(&hblk_blocks, sizeof(int), 1, fd); /* number of blocks */
 	fwrite(&un_hblk_blocks, sizeof(int), 1, fd); /* number of unspent blocks */
-
-
 
 	/* BLOCKS */
 	llist_for_each(blockchain->chain, writeBlk, fd);
