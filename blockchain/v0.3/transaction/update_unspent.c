@@ -1,5 +1,32 @@
 #include "blockchain.h"
 
+/**
+ * add_tx_outputs - adds tx outputs to new unspent llist
+ * @transactions: list of validated transactions
+ * @new_unspent_txns: current list of unspent transaction outputs
+ */
+void add_tx_outputs(llist_t *transactions, llist_t *new_unspent_txns)
+{
+	int i, j, txs_size, out_size;
+	transaction_t *tx = NULL;
+	tx_out_t *out = NULL;
+	unspent_tx_out_t *un = NULL;
+
+	txs_size = llist_size(transactions);
+	new_unspent_txns = llist_create(MT_SUPPORT_FALSE);
+
+	for (i = 0; i < txs_size; i++) /* add txns outputs to new_unspent_txns */
+	{
+		tx = llist_get_node_at(transactions, i);
+		out_size = llist_size(tx->outputs);
+		for (j = 0; j < out_size; j++)
+		{
+			out = llist_get_node_at(tx->outputs, j);
+			un = unspent_tx_out_create(block_hash, tx->id, out);
+			llist_add_node(new_unspent_txns, un, ADD_NODE_REAR);
+		}
+	}
+}
 
 /**
  * input_matches_unspent - checks whether an input matches any of the unspent
@@ -46,17 +73,21 @@ llist_t *update_unspent(
 
 	if (!transactions || !block_hash || !all_unspent)
 		return (NULL);
+
 	txs_size = llist_size(transactions);
 	unspent_size = llist_size(all_unspent);
 	new_unspent_txns = llist_create(MT_SUPPORT_FALSE);
+
 	for (i = 0; i < unspent_size; i++) /* all_unspent compared vs each input */
 	{
 		un = llist_get_node_at(all_unspent, i);
 		un_found = 0;
+
 		for (j = 0; j < txs_size && un_found == 0; j++) /* all transactions */
 		{
 			tx = llist_get_node_at(transactions, j);
 			in_size = llist_size(tx->inputs);
+
 			for (k = 0; k < in_size && un_found == 0; k++) /* inputs of tx */
 			{
 				in = llist_get_node_at(tx->inputs, k);
@@ -67,17 +98,8 @@ llist_t *update_unspent(
 		if (!un_found)
 			llist_add_node(new_unspent_txns, un, ADD_NODE_REAR);
 	}
-	for (i = 0; i < txs_size; i++) /* add txns outputs to new_unspent_txns */
-	{
-		tx = llist_get_node_at(transactions, i);
-		out_size = llist_size(tx->outputs);
-		for (j = 0; j < out_size; j++)
-		{
-			out = llist_get_node_at(tx->outputs, j);
-			un = unspent_tx_out_create(block_hash, tx->id, out);
-			llist_add_node(new_unspent_txns, un, ADD_NODE_REAR);
-		}
-	}
+
+	add_tx_outputs(transactions, new_unspent_txns);
 
 	llist_destroy(all_unspent, 1, free);
 	return (new_unspent_txns);
