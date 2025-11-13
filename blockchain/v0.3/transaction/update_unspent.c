@@ -4,15 +4,12 @@
  * input_matches_unspent - checks whether an input matches any of the unspent
  * @in: individual input
  * @un: individual unspent transaction
- * @block_hash: hash of the validated block that contains the
- *  transaction list transactions
  *
  * Return: 1 if matches, 0 if not
  */
-int input_matches_unspent(tx_in_t *in, unspent_tx_out_t *un,
-	uint8_t block_hash[SHA256_DIGEST_LENGTH])
+int input_matches_unspent(tx_in_t *in, unspent_tx_out_t *un)
 {
-	if (memcmp(in->block_hash, block_hash, SHA256_DIGEST_LENGTH) != 0)
+	if (memcmp(in->block_hash, un->block_hash, SHA256_DIGEST_LENGTH) != 0)
 		return (0);
 
 	if (memcmp(in->tx_id, un->tx_id, SHA256_DIGEST_LENGTH) != 0)
@@ -51,7 +48,7 @@ llist_t *update_unspent(
 	txs_size = llist_size(transactions);
 	unspent_size = llist_size(all_unspent);
 	new_unspent_txns = llist_create(MT_SUPPORT_FALSE);
-	for (i = 0; i < txs_size; i++) /* all_unspent compared vs each input */
+	for (i = 0; i < unspent_size; i++) /* all_unspent compared vs each input */
 	{
 		un = llist_get_node_at(all_unspent, i);
 		un_found = 0;
@@ -62,7 +59,7 @@ llist_t *update_unspent(
 			for (k = 0; k < in_size && un_found == 0; k++) /* inputs of tx */
 			{
 				in = llist_get_node_at(tx->inputs, k);
-				if (input_matches_unspent(in, un, block_hash))
+				if (input_matches_unspent(in, un))
 					un_found = 1;
 			}
 		}
@@ -80,5 +77,7 @@ llist_t *update_unspent(
 			llist_add_node(new_unspent_txns, un, ADD_NODE_REAR);
 		}
 	}
+
+	llist_destroy(all_unspent, 1, )
 	return (new_unspent_txns);
 }
