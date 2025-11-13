@@ -84,7 +84,7 @@ transaction_t *transaction_create(
 
 	if (!sender || !receiver || !amount || !all_unspent)
 	{
-		fprintf(stderr, "!param\n");
+		fprintf(stderr, "!param in transaction_create\n");
 		return (NULL);
 	}
 

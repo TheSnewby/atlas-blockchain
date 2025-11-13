@@ -73,7 +73,10 @@ llist_t *update_unspent(
 	unspent_tx_out_t *un = NULL;
 
 	if (!transactions || !block_hash || !all_unspent)
+	{
+		fprintf(stderr, "!param in update_unspent\n");
 		return (NULL);
+	}
 
 	txs_size = llist_size(transactions);
 	unspent_size = llist_size(all_unspent);

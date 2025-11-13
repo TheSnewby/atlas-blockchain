@@ -120,7 +120,7 @@ int transaction_is_valid(transaction_t const *transaction,
 
 	if (!transaction || !all_unspent)
 	{
-		fprintf(stderr, "!params\n");
+		fprintf(stderr, "!params in transaction_is_valid\n");
 		return (0);
 	}
 

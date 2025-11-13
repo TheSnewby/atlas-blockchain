@@ -22,7 +22,7 @@ sig_t *tx_in_sign(
 
 	if (!in || !tx_id || !sender || !all_unspent)
 	{
-		fprintf(stderr, "!param\n");
+		fprintf(stderr, "!param in tx_in_sign\n");
 		return (NULL);
 	}
 
