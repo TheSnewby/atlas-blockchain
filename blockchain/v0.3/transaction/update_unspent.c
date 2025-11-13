@@ -1,5 +1,6 @@
 #include "blockchain.h"
 
+
 /**
  * input_matches_unspent - checks whether an input matches any of the unspent
  * @in: individual input
@@ -78,6 +79,6 @@ llist_t *update_unspent(
 		}
 	}
 
-	llist_destroy(all_unspent, 1, )
+	llist_destroy(all_unspent, 1, free);
 	return (new_unspent_txns);
 }
